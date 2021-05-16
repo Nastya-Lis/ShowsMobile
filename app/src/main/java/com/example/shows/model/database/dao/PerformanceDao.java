@@ -4,12 +4,15 @@ package com.example.shows.model.database.dao;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Query;
+import androidx.room.TypeConverters;
 
 import com.example.shows.model.database.entity.Performance;
+import com.example.shows.model.database.entity.converter.ConverterDateType;
 
 import java.util.List;
 
 @Dao
+@TypeConverters({ConverterDateType.class})
 public abstract class PerformanceDao extends CommonDao<Performance>{
 
     @Override

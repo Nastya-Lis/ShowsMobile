@@ -6,6 +6,7 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
 import com.example.shows.model.database.dao.ActorDao;
 import com.example.shows.model.database.dao.ActorPerformanceDao;
@@ -23,9 +24,11 @@ import com.example.shows.model.database.entity.Performance;
 import com.example.shows.model.database.entity.Scenarist;
 import com.example.shows.model.database.entity.ScenaristPerformance;
 import com.example.shows.model.database.entity.User;
+import com.example.shows.model.database.entity.converter.ConverterDateType;
 
 @Database(entities = {Actor.class, ActorPerformance.class, Booking.class, Geners.class,
         Performance.class, Scenarist.class, ScenaristPerformance.class, User.class}, version = 1)
+@TypeConverters({ConverterDateType.class})
 public abstract class DatabaseShows extends RoomDatabase {
     public abstract ActorDao actorDao();
     public abstract ActorPerformanceDao actorPerformanceDao();

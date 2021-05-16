@@ -5,14 +5,21 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
+
+import com.example.shows.model.database.entity.converter.ConverterDateType;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 @Entity(tableName = "performance",foreignKeys = @ForeignKey(entity = Geners.class, parentColumns = "id", childColumns = "genre_id"))
+@TypeConverters({ConverterDateType.class})
 public class Performance extends CommonEntity{
+    private String name;
     private String description;
-    private Date date;
+    @TypeConverters(ConverterDateType.class)
+    private Timestamp date;
     private String duration;
     private int amountTickets;
     private double price;
@@ -40,11 +47,11 @@ public class Performance extends CommonEntity{
         this.description = description;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 
@@ -84,9 +91,17 @@ public class Performance extends CommonEntity{
         return genreId;
     }
 
+
+
     public void setGenreId(int genreId) {
-        this.genreId = genreId;
+        if(genre!=null)
+            this.genreId = genre.getId();
+        else
+            this.genreId = genreId;
     }
+
+
+
 
     public Geners getGenre() {
         return genre;
@@ -120,4 +135,11 @@ public class Performance extends CommonEntity{
         this.scenarists = scenarists;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
