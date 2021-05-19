@@ -5,12 +5,13 @@ import androidx.room.TypeConverters;
 import com.example.shows.model.database.entity.converter.ConverterDateType;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.List;
 
 import lombok.Data;
 
 @Data
-public class PerformanceDto {
+public class PerformanceDto extends AbstractDto{
 
     private String name;
     private String description;
@@ -21,9 +22,9 @@ public class PerformanceDto {
     private double price;
     private double rating;
 
-    private List<Integer> bookingsId;
+    private Collection<Integer> bookingsId;
     private GenersDto genre;
 
-    private List<ActorDto> actors;
-    private List<ScenaristDto> scenarists;
+    private Collection<ActorDto> actors;
+    private Collection<ScenaristDto> scenarists;
 }

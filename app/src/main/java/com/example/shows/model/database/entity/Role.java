@@ -5,6 +5,7 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 
 import java.util.List;
+import java.util.Set;
 
 import lombok.Data;
 
@@ -14,5 +15,5 @@ import lombok.Data;
 public class Role extends CommonEntity {
     private String name;
     @Ignore
-    private List<User> users;
+    private Set<User> users;
 }

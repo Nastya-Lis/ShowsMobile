@@ -3,11 +3,9 @@ package com.example.shows.model.database.dao;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Query;
-import androidx.room.Transaction;
 
 import com.example.shows.model.database.entity.Booking;
 import com.example.shows.model.database.entity.Performance;
-import com.example.shows.model.database.entity.User;
 
 import java.util.List;
 
@@ -16,7 +14,7 @@ public abstract class BookingDao extends CommonDao<Booking>{
 
     @Override
     @Query("Select * from booking")
-    public abstract LiveData<List<Booking>> getAll();
+    public abstract List<Booking> getAll();
 
     @Override
     @Query("SELECT * FROM booking WHERE id=:id")

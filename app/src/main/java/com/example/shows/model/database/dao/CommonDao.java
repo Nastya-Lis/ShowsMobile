@@ -7,6 +7,7 @@ import androidx.room.Insert;
 import androidx.room.Update;
 
 import com.example.shows.model.database.entity.CommonEntity;
+import com.example.shows.model.database.entity.Performance;
 
 import java.util.List;
 
@@ -21,7 +22,8 @@ public abstract class CommonDao<E extends CommonEntity> {
     @Delete
     public abstract void delete(E entity);
 
-    public abstract LiveData<List<E>> getAll();
+    //добавить дополнительную обертку вокруг коллекции LiveData
+    public abstract List<E> getAll();
 
     public abstract LiveData<E> getById(int id);
 }

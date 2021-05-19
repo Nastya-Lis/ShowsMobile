@@ -12,7 +12,9 @@ import com.example.shows.model.database.entity.converter.ConverterDateType;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.List;
+
 @Entity(tableName = "performance",foreignKeys = @ForeignKey(entity = Geners.class, parentColumns = "id", childColumns = "genre_id"))
 @TypeConverters({ConverterDateType.class})
 public class Performance extends CommonEntity{
@@ -29,13 +31,13 @@ public class Performance extends CommonEntity{
     private int genreId;
 
     @Ignore
-    private List<Booking> bookings;
+    private Collection<Booking> bookings;
     @Ignore
     private Geners genre;
     @Ignore
-    private List<Actor> actors;
+    private Collection<Actor> actors;
     @Ignore
-    private List<Scenarist> scenarists;
+    private Collection<Scenarist> scenarists;
 
 
 
@@ -111,27 +113,27 @@ public class Performance extends CommonEntity{
         this.genre = genre;
     }
 
-    public List<Booking> getBookings() {
+    public Collection<Booking> getBookings() {
         return bookings;
     }
 
-    public void setBookings(List<Booking> bookings) {
+    public void setBookings(Collection<Booking> bookings) {
         this.bookings = bookings;
     }
 
-    public List<Actor> getActors() {
+    public Collection<Actor> getActors() {
         return actors;
     }
 
-    public void setActors(List<Actor> actors) {
+    public void setActors(Collection<Actor> actors) {
         this.actors = actors;
     }
 
-    public List<Scenarist> getScenarists() {
+    public Collection<Scenarist> getScenarists() {
         return scenarists;
     }
 
-    public void setScenarists(List<Scenarist> scenarists) {
+    public void setScenarists(Collection<Scenarist> scenarists) {
         this.scenarists = scenarists;
     }
 

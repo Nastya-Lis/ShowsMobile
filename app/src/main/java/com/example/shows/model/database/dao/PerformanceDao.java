@@ -17,7 +17,10 @@ public abstract class PerformanceDao extends CommonDao<Performance>{
 
     @Override
     @Query("SELECT * FROM performance")
-    public abstract LiveData<List<Performance>> getAll();
+    public abstract List<Performance> getAll();
+
+    @Query("Select * from performance limit 1")
+    public abstract Performance getFirstPerformance();
 
     @Override
     @Query("Select * from performance Where id=:id")

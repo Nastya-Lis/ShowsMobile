@@ -5,6 +5,7 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity(tableName = "scenarist")
 public class Scenarist extends CommonEntity{
@@ -12,7 +13,7 @@ public class Scenarist extends CommonEntity{
     private String biography;
 
     @Ignore
-    private List<Performance> performances;
+    private Set<Performance> performances;
     public String getName() {
         return name;
     }
@@ -29,11 +30,11 @@ public class Scenarist extends CommonEntity{
         this.biography = biography;
     }
 
-    public List<Performance> getPerformances() {
+    public Set<Performance> getPerformances() {
         return performances;
     }
 
-    public void setPerformances(List<Performance> performances) {
+    public void setPerformances(Set<Performance> performances) {
         this.performances = performances;
     }
 

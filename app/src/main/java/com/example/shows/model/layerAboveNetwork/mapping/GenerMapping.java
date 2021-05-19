@@ -12,6 +12,7 @@ import org.mapstruct.Named;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper(uses = PerformanceMapping.class)
@@ -27,6 +28,9 @@ public interface GenerMapping {
      }
 
     */
+
+    List<Geners> dtoesToEntities(List<GenersDto> dtoes);
+
     @Named("entityToId")
     default Collection<Integer> entityToId(Collection<Performance> performances){
         return performances.stream().map(CommonEntity::getId).collect(Collectors.toList());

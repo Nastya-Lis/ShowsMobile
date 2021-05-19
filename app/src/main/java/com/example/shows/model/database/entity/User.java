@@ -6,6 +6,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 
+import java.util.Collection;
 import java.util.List;
 
 import lombok.Data;
@@ -25,6 +26,6 @@ public class User extends CommonEntity{
     private Role role;
 
     @Ignore
-    private List<Booking> bookings;
+    private Collection<Booking> bookings;
 
 }

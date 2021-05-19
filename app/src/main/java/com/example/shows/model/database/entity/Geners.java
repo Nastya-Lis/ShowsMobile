@@ -4,6 +4,7 @@ package com.example.shows.model.database.entity;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 
+import java.util.Collection;
 import java.util.List;
 
 @Entity(tableName = "gener")
@@ -11,7 +12,7 @@ public class Geners extends CommonEntity{
     private String nameType;
 
     @Ignore
-    private List<Performance> performances;
+    private Collection<Performance> performances;
 
     public String getNameType() {
         return nameType;
@@ -21,13 +22,12 @@ public class Geners extends CommonEntity{
         this.nameType = nameType;
     }
 
-    public List<Performance> getPerformances() {
+    public Collection<Performance> getPerformances() {
         return performances;
     }
 
-    public void setPerformances(List<Performance> performances) {
+    public void setPerformances(Collection<Performance> performances) {
         this.performances = performances;
     }
-
 
 }

@@ -5,9 +5,8 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Query;
 
+import com.example.shows.model.database.entity.Performance;
 import com.example.shows.model.database.entity.User;
-
-import org.mapstruct.control.MappingControl;
 
 import java.util.List;
 
@@ -15,7 +14,7 @@ import java.util.List;
 public abstract class UserDao extends CommonDao<User>{
     @Override
     @Query("SELECT * FROM user")
-    public abstract LiveData<List<User>> getAll();
+    public abstract List<User> getAll();
 
     @Override
     @Query("SELECT * FROM user WHERE id=:id")

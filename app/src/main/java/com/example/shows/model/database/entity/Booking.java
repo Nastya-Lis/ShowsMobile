@@ -4,11 +4,15 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
+import androidx.room.TypeConverters;
+
+import com.example.shows.model.database.entity.converter.ConverterDateType;
 
 @Entity(tableName = "booking",foreignKeys = {
         @ForeignKey(parentColumns = "id",childColumns = "user_id", entity = User.class),
         @ForeignKey(parentColumns = "id", childColumns = "performance_id", entity = Performance.class)
 })
+@TypeConverters({ConverterDateType.class})
 public class Booking extends CommonEntity{
     private int amount;
     @ColumnInfo(name = "user_id")

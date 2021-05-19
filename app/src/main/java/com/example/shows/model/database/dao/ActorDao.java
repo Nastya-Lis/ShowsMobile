@@ -6,7 +6,7 @@ import androidx.room.Dao;
 import androidx.room.Query;
 
 import com.example.shows.model.database.entity.Actor;
-import com.example.shows.model.database.entity.CommonEntity;
+import com.example.shows.model.database.entity.Performance;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
 public abstract class ActorDao extends CommonDao<Actor>{
     @Override
     @Query("SELECT * FROM actor")
-    public abstract LiveData<List<Actor>> getAll();
+    public abstract List<Actor> getAll();
 
     @Override
     @Query("SELECT *FROM actor WHERE id =:id")

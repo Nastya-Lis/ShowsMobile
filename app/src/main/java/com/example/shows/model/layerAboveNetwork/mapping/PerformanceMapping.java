@@ -15,27 +15,31 @@ import org.mapstruct.Named;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper(uses = {ActorMapping.class, ScenaristMapping.class, GenerMapping.class,BookingMapping.class})
 public interface PerformanceMapping {
     @Mappings({
             @Mapping(target = "bookingsId",source = "bookings",qualifiedByName = "eToIdBooking"),
-            @Mapping(target = "entity.genre",source = "genre")})
+            @Mapping(target = "genre",source = "entity.genre")})
     PerformanceDto entityToDto(Performance entity);
     @Mappings({
             @Mapping(target = "bookings",source = "bookingsId",qualifiedByName = "idToEBooking"),
-            @Mapping(target = "dto.genre",source = "genre")})
+            @Mapping(target = "genre",source = "dto.genre")})
     Performance dtoToEntity(PerformanceDto dto);
+
+    List<Performance> dtoesToEntities(List<PerformanceDto> performanceDtos);
 
     @Named("idToEBooking")
     default Collection<Booking> idToEBooking(Collection<Integer> idCollection){
         Collection<Booking> bookingCollection = new ArrayList<>();
-
-        for (Integer id: idCollection) {
-            Booking booking = new Booking();
-            booking.setId(id);
-            bookingCollection.add(booking);
+        if(idCollection!=null) {
+            for (Integer id : idCollection) {
+                Booking booking = new Booking();
+                booking.setId(id);
+                bookingCollection.add(booking);
+            }
         }
         return bookingCollection;
     }
