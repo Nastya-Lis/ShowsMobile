@@ -23,7 +23,7 @@ public abstract class CommonDao<E extends CommonEntity> {
     public abstract void delete(E entity);
 
     //добавить дополнительную обертку вокруг коллекции LiveData
-    public abstract List<E> getAll();
+    public abstract LiveData<List<E>> getAll();
 
     public abstract LiveData<E> getById(int id);
 }

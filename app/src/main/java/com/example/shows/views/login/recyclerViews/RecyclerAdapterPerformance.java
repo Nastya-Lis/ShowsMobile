@@ -19,9 +19,15 @@ public class RecyclerAdapterPerformance extends RecyclerView.Adapter<RecyclerAda
     List<Performance> performanceList;
     List<Performance> performanceListCopy;
 
-    public RecyclerAdapterPerformance(List<Performance> performanceList){
+  /*  public RecyclerAdapterPerformance(List<Performance> performanceList){
         this.performanceList = performanceList;
-        performanceListCopy = new ArrayList<>(performanceList);
+   //     performanceListCopy = new ArrayList<>(performanceList);
+    }
+*/
+
+    public void setPerformanceList(List<Performance> performanceList) {
+        this.performanceList = performanceList;
+        notifyDataSetChanged();
     }
 
     public class RecyclerPerform extends RecyclerView.ViewHolder {

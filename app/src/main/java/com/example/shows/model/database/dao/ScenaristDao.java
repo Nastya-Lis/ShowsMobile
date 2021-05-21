@@ -14,7 +14,7 @@ import java.util.List;
 public abstract class ScenaristDao extends CommonDao<Scenarist>{
     @Override
     @Query("SELECT * FROM scenarist")
-    public abstract List<Scenarist> getAll();
+    public abstract LiveData<List<Scenarist>> getAll();
 
     @Override
     @Query("SELECT * FROM scenarist WHERE id=:id")

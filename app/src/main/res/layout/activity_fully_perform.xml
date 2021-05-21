@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+        <variable name = "vm"
+            type = "com.example.shows.viewModel.PerformanceViewModel"/>
+    </data>
+
+<androidx.appcompat.widget.LinearLayoutCompat
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.FullyPerformActivity">
@@ -18,13 +25,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Название:"
-                android:textSize="17dp" />
+                android:textSize="17dp"
+
+                />
 
             <TextView
                 android:id="@+id/namePerform"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="17dp" />
+                android:textSize="17dp"
+                android:text="@{vm.liveDataById.name}"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -36,7 +46,8 @@
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="17dp" />
+                android:textSize="17dp"
+                android:text="@{vm.liveDataById.description}"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -45,10 +56,11 @@
                 android:textSize="17dp" />
 
             <TextView
-                android:id="@+id/durationId"
+                android:id="@+id/duration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="17dp" />
+                android:textSize="17dp"
+                android:text="@{vm.liveDataById.duration}"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -57,10 +69,12 @@
                 android:textSize="17dp" />
 
             <TextView
-                android:id="@+id/dateId"
+                android:id="@+id/date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="17dp" />
+                android:textSize="17dp"
+                android:text="@{vm.liveDataById.date.toString()}"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -70,10 +84,12 @@
                 />
 
             <TextView
-                android:id="@+id/amountTicketId"
+                android:id="@+id/amountTicket"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="17dp" />
+                android:textSize="17dp"
+                android:text="@{``+vm.liveDataById.amountTickets}"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -82,10 +98,12 @@
                 android:textSize="17dp" />
 
             <TextView
-                android:id="@+id/genreId"
+                android:id="@+id/genre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="17dp" />
+                android:textSize="17dp"
+                android:text="@{``+vm.liveDataById.genreId}"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -94,10 +112,12 @@
                 android:textSize="17dp" />
 
             <TextView
-                android:id="@+id/ratingId"
+                android:id="@+id/rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="17dp" />
+                android:textSize="17dp"
+                android:text="@{``+vm.liveDataById.rating}"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -106,10 +126,11 @@
                 android:textSize="17dp" />
 
             <TextView
-                android:id="@+id/actorListId"
+                android:id="@+id/actorList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="17dp" />
+                android:textSize="17dp"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -118,10 +139,12 @@
                 android:textSize="17dp" />
 
             <TextView
-                android:id="@+id/scenaristListId"
+                android:id="@+id/scenaristList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="17dp" />
+                android:textSize="17dp"
+                android:text="@{``+vm.liveDataById.id}"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -130,12 +153,20 @@
                 android:textSize="17dp" />
 
             <TextView
-                android:id="@+id/priceId"
+                android:id="@+id/price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="17dp" />
+                android:textSize="17dp"
+                android:text="@{``+vm.liveDataById.price}"/>
 
+            <Button
+                android:layout_height="60dp"
+                android:layout_width="match_parent"
+                android:text="Забронировать"
+                android:onClick="reloadMeme">
+            </Button>
 
         </LinearLayout>
     </ScrollView>
 </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

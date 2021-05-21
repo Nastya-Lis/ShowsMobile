@@ -47,7 +47,8 @@ public abstract class DatabaseShows extends RoomDatabase {
     public static DatabaseShows getInstance(final Context context){
 
         INSTANCE = Room.databaseBuilder(context.getApplicationContext(), DatabaseShows.class,
-                nameDB).build();
+                nameDB)
+                .build();
         return INSTANCE;
     }
 }

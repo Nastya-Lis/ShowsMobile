@@ -3,6 +3,8 @@ package com.example.shows.model.layerAboveNetwork.service;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.shows.model.database.DatabaseShows;
 import com.example.shows.model.database.entity.Actor;
 import com.example.shows.model.database.entity.Scenarist;
@@ -78,7 +80,7 @@ public class ScenaristService {
         }
     }
 
-    public List<Scenarist> getScenaristsFromDb(){
+    public LiveData<List<Scenarist>> getScenaristsFromDb(){
         getAllScenaristsFromApi();
         return databaseShows.scenaristDao().getAll();
     }

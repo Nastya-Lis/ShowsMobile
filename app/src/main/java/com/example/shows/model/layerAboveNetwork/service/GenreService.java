@@ -4,6 +4,8 @@ package com.example.shows.model.layerAboveNetwork.service;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.shows.model.database.DatabaseShows;
 import com.example.shows.model.database.entity.Actor;
 import com.example.shows.model.database.entity.Geners;
@@ -79,7 +81,7 @@ public class GenreService {
         }
     }
 
-    public List<Geners> getGenresFromDb(){
+    public LiveData<List<Geners>> getGenresFromDb(){
         getAllGenresFromApi();
         return databaseShows.genersDao().getAll();
     }

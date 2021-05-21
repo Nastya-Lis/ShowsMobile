@@ -3,6 +3,8 @@ package com.example.shows.model.layerAboveNetwork.service;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.shows.model.database.DatabaseShows;
 import com.example.shows.model.database.entity.Actor;
 import com.example.shows.model.database.entity.Performance;
@@ -79,7 +81,7 @@ public class ActorService {
         }
     }
 
-    public List<Actor> getPerformancesFromDb(){
+    public LiveData<List<Actor>> getPerformancesFromDb(){
         getAllActorsFromApi();
         return databaseShows.actorDao().getAll();
     }

@@ -14,7 +14,7 @@ public abstract class BookingDao extends CommonDao<Booking>{
 
     @Override
     @Query("Select * from booking")
-    public abstract List<Booking> getAll();
+    public abstract LiveData<List<Booking>> getAll();
 
     @Override
     @Query("SELECT * FROM booking WHERE id=:id")

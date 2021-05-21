@@ -14,7 +14,7 @@ import java.util.List;
 public abstract class ActorDao extends CommonDao<Actor>{
     @Override
     @Query("SELECT * FROM actor")
-    public abstract List<Actor> getAll();
+    public abstract LiveData<List<Actor>> getAll();
 
     @Override
     @Query("SELECT *FROM actor WHERE id =:id")

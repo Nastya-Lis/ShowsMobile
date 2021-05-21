@@ -1,6 +1,7 @@
 package com.example.shows.model.database.entity;
 
 
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -20,6 +21,7 @@ import java.util.List;
 public class Performance extends CommonEntity{
     private String name;
     private String description;
+    @Nullable
     @TypeConverters(ConverterDateType.class)
     private Timestamp date;
     private String duration;
@@ -27,11 +29,14 @@ public class Performance extends CommonEntity{
     private double price;
     private double rating;
 
+    @Nullable
     @ColumnInfo(name = "genre_id")
     private int genreId;
 
     @Ignore
+    @Nullable
     private Collection<Booking> bookings;
+    @Nullable
     @Ignore
     private Geners genre;
     @Ignore
@@ -144,4 +149,19 @@ public class Performance extends CommonEntity{
     public void setName(String name) {
         this.name = name;
     }
+
+
+    public Performance clone() throws CloneNotSupportedException {
+         Performance copyObj = new Performance();
+         copyObj.setName(this.name);
+         copyObj.setDate(this.date);
+         copyObj.setRating(this.rating);
+         copyObj.setPrice(this.price);
+         copyObj.setGenreId(this.genreId);
+         copyObj.setDuration(this.duration);
+         copyObj.setDescription(this.description);
+         copyObj.setAmountTickets(this.amountTickets);
+         return copyObj;
+    }
+
 }

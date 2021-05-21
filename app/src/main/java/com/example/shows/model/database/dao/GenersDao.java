@@ -15,7 +15,7 @@ public abstract class GenersDao extends CommonDao<Geners>{
 
     @Override
     @Query("SELECT * FROM gener")
-    public abstract List<Geners> getAll();
+    public abstract LiveData<List<Geners>> getAll();
 
     @Override
     @Query("SELECT * FROM gener WHERE id =:id")

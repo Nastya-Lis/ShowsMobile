@@ -17,7 +17,7 @@
         >
     </item>
     <item
-        android:id="@+id/templateCongratulation"
+        android:id="@+id/bookingCheck"
         android:icon="@android:drawable/ic_dialog_email"
         app:showAsAction="always"
         android:title="hui"

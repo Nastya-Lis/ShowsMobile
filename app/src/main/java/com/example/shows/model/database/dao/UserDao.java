@@ -14,7 +14,7 @@ import java.util.List;
 public abstract class UserDao extends CommonDao<User>{
     @Override
     @Query("SELECT * FROM user")
-    public abstract List<User> getAll();
+    public abstract LiveData<List<User>> getAll();
 
     @Override
     @Query("SELECT * FROM user WHERE id=:id")

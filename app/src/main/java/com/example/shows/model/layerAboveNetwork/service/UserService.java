@@ -3,6 +3,8 @@ package com.example.shows.model.layerAboveNetwork.service;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.shows.model.database.DatabaseShows;
 import com.example.shows.model.database.entity.Actor;
 import com.example.shows.model.database.entity.User;
@@ -78,7 +80,7 @@ public class UserService {
         }
     }
 
-    public List<User> getUsersFromDb(){
+    public LiveData<List<User>> getUsersFromDb(){
         getAllUsersFromApi();
         return databaseShows.userDao().getAll();
     }
