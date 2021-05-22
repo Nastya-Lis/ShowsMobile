@@ -24,8 +24,14 @@ import android.widget.PopupMenu;
 
 import com.example.shows.databinding.ActivityMainBinding;
 import com.example.shows.model.database.DatabaseShows;
+import com.example.shows.model.database.entity.Actor;
+import com.example.shows.model.database.entity.ActorPerformance;
 import com.example.shows.model.database.entity.Geners;
 import com.example.shows.model.database.entity.Performance;
+import com.example.shows.model.database.entity.Role;
+import com.example.shows.model.database.entity.Scenarist;
+import com.example.shows.model.database.entity.ScenaristPerformance;
+import com.example.shows.model.database.entity.User;
 import com.example.shows.model.layerAboveNetwork.service.ActorService;
 import com.example.shows.model.layerAboveNetwork.service.GenreService;
 import com.example.shows.model.layerAboveNetwork.service.PerformanceService;
@@ -69,23 +75,50 @@ public class MainActivity extends AppCompatActivity {
         mainBinding.setLifecycleOwner(this);
 
         Geners geners = new Geners();
-        geners.setNameType("Body Horror");
+        geners.setNameType("Naked and funny");
+
+        Actor actor = new Actor();
+        actor.setName("Dmitri Lze");
+        actor.setBiography("Just freakin idiot");
 
 
+        Scenarist scenarist = new Scenarist();
+        scenarist.setName("Federiko Kastilo");
+        scenarist.setBiography("Good boy");
+
+
+
+        ActorPerformance actorPerformance = new ActorPerformance();
+        actorPerformance.setActor_id(2);
+        actorPerformance.setPerformance_id(3);
+
+
+        ScenaristPerformance scenaristPerformance = new ScenaristPerformance();
+        scenaristPerformance.setScenarist_id(4);
+        scenaristPerformance.setPerformance_id(2);
+
+
+     /*
+        Role role = new Role();
+        role.setName("User");*/
+
+        User user = new User();
+        user.setLogin("Bublik");
+        user.setPassword("1234");
+        user.setEmail("babka@mail.ru");
       //  List<Performance> performances = new ArrayList<>();
 
-        //DatabaseShows databaseShows = DatabaseShows.getInstance(this);
+    /*    DatabaseShows databaseShows = DatabaseShows.getInstance(this);
 
-     /*   AsyncTask.execute(
+        AsyncTask.execute(
                 new Runnable() {
                     @Override
                     public void run() {
-                        databaseShows.genersDao().insert(geners);
+                        databaseShows.userDao().insert(user);
                     }
                 }
-        );*/
-
-
+        );
+*/
         recyclerAdapterPerformance = new RecyclerAdapterPerformance();
 
 

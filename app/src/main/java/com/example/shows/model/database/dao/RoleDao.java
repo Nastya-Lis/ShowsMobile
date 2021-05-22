@@ -11,4 +11,5 @@ public abstract class RoleDao extends CommonDao<Role> {
     @Query("SELECT * FROM ROLE WHERE name =:name")
     abstract Role findFirstByName(String name);
 
+
 }

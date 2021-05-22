@@ -45,20 +45,6 @@ public class PerformanceService {
         databaseShows = DatabaseShows.getInstance(context);
         this.context = context;
     }
-  /*  public void takeDataFromApi(){
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                // All your networking logic
-                // should be here
-            }
-        });
-    }*/
-
-    interface PerformanceCallback{
-        void callbacks();
-    }
-
 
     public void getAllPerformancesFromApi(){
        performanceApi.getAllPerformances().enqueue(new Callback<List<PerformanceDto>>() {
@@ -89,7 +75,7 @@ public class PerformanceService {
                     }
                 }
 
-                 addToDb(performances);
+             //    addToDb(performances);
 
             }
 

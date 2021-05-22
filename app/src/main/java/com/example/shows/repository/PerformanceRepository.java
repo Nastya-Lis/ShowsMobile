@@ -31,6 +31,7 @@ public class PerformanceRepository extends CommonRepository<Performance>{
 
     private LiveData<List<Performance>> performancesList;
     private LiveData<Performance> performance;
+    private MutableLiveData<Performance> performanceMutable;
     private int currentId = 0;
     private boolean isLastDefault = true;
 
@@ -64,6 +65,11 @@ public class PerformanceRepository extends CommonRepository<Performance>{
         return performance;
     }
 
+
+  /*  public MutableLiveData<Performance> getPerformanceMutableById(Integer id){
+        performanceMutable = performanceDao.getByIdMutable(id);
+        return performanceMutable;
+    }*/
 
     @Override
     public void insert(Performance item, Consumer<SQLiteException> onError) {

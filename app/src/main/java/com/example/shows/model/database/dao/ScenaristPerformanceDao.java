@@ -10,6 +10,7 @@ import androidx.room.Update;
 
 import com.example.shows.model.database.entity.ActorPerformance;
 import com.example.shows.model.database.entity.Performance;
+import com.example.shows.model.database.entity.Scenarist;
 import com.example.shows.model.database.entity.ScenaristPerformance;
 
 import java.util.List;
@@ -24,6 +25,9 @@ public abstract class ScenaristPerformanceDao {
 
     @Delete
     public abstract void delete(ScenaristPerformance scenaristPerformance);
+
+    @Query("SELECT * FROM scenarist Where id In (SELECT scenarist_id FROM scenarist_performance Where performance_id =:performanceId)")
+    public abstract LiveData<List<Scenarist>> getScenaristsByPerformance(int performanceId);
 
     @Query("SELECT * FROM performance Where id In (SELECT performance_id FROM scenarist_performance Where scenarist_id =:scenaristId)")
     public abstract LiveData<List<Performance>> getPerformancesByScenarist(int scenaristId);

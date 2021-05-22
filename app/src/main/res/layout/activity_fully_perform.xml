@@ -102,7 +102,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="17dp"
-                android:text="@{``+vm.liveDataById.genreId}"
+                android:text="@{vm.genersLiveData.nameType}"
                 />
 
             <TextView
@@ -130,6 +130,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="17dp"
+                android:text="@{vm.actorsListLiveData}"
                 />
 
             <TextView
@@ -143,7 +144,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="17dp"
-                android:text="@{``+vm.liveDataById.id}"
+                android:text="@{vm.scenaristListLiveData}"
                 />
 
             <TextView
@@ -163,7 +164,7 @@
                 android:layout_height="60dp"
                 android:layout_width="match_parent"
                 android:text="Забронировать"
-                android:onClick="reloadMeme">
+                android:onClick="getBookingPage">
             </Button>
 
         </LinearLayout>

@@ -7,6 +7,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.shows.model.database.entity.Actor;
 import com.example.shows.model.database.entity.ActorPerformance;
 import com.example.shows.model.database.entity.Performance;
 
@@ -22,6 +23,9 @@ public abstract class ActorPerformanceDao{
 
     @Delete
     public abstract void delete(ActorPerformance actorPerformance);
+
+    @Query("SELECT * FROM actor Where id In (SELECT actor_id FROM actor_performance Where performance_id =:performanceId)")
+    public abstract LiveData<List<Actor>> getActorsByPerformance(int performanceId);
 
     @Query("SELECT * FROM performance Where id In (SELECT performance_id FROM actor_performance Where actor_id =:actorId)")
     public abstract LiveData<List<Performance>> getPerformancesByActor(int actorId);

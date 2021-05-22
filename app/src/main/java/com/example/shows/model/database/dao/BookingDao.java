@@ -23,6 +23,9 @@ public abstract class BookingDao extends CommonDao<Booking>{
     @Query("SELECT * FROM booking WHERE user_id =:userId")
     public abstract LiveData<List<Booking>> getBookingByUser(Integer userId);
 
+    @Query("SELECT * FROM booking WHERE user_id =:userId and performance_id =:performId")
+    public abstract LiveData<List<Booking>> getBookingByUserAndPerform(Integer userId, Integer performId);
+
 //    @Transaction
 //    public LiveData<List<Booking>> getBookingByUser(User user){
 //        return getBookingByUser(user.getId());
