@@ -3,21 +3,19 @@ package com.example.shows.model.database.asyncClasses;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 
-import androidx.room.Entity;
-
-import com.example.shows.model.database.dao.CommonDao;
-import com.example.shows.model.database.entity.CommonEntity;
+import com.example.shows.model.database.dao.ActorPerformanceDao;
+import com.example.shows.model.database.entity.ActorPerformance;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-public class OperationAsyncClass<D extends CommonDao<E>, E extends CommonEntity> extends AsyncTask<E, Void, SQLiteException> {
+public class ActorPerformanceAsyncClass extends AsyncTask<ActorPerformance, Void, SQLiteException> {
 
-    private D dao;
+    private ActorPerformanceDao dao;
     private Consumer<SQLiteException> onError;
-    private BiConsumer<D, E> doInBackground;
+    private BiConsumer<ActorPerformanceDao, ActorPerformance> doInBackground;
 
-    public OperationAsyncClass(D dao, Consumer<SQLiteException> onError, BiConsumer<D, E> doInBackground) {
+    public ActorPerformanceAsyncClass(ActorPerformanceDao dao, Consumer<SQLiteException> onError, BiConsumer<ActorPerformanceDao, ActorPerformance> doInBackground) {
         this.dao = dao;
         this.onError = onError;
         this.doInBackground = doInBackground;
@@ -25,7 +23,7 @@ public class OperationAsyncClass<D extends CommonDao<E>, E extends CommonEntity>
 
     @SafeVarargs
     @Override
-    protected final SQLiteException doInBackground(E... items) {
+    protected final SQLiteException doInBackground(ActorPerformance... items) {
         try {
             doInBackground.accept(dao, items[0]);
             return null;

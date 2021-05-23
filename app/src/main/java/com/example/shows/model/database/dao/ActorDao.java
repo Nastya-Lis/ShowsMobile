@@ -16,6 +16,9 @@ public abstract class ActorDao extends CommonDao<Actor>{
     @Query("SELECT * FROM actor")
     public abstract LiveData<List<Actor>> getAll();
 
+    @Query("DELETE FROM actor")
+    public abstract void deleteAllActors();
+
     @Override
     @Query("SELECT *FROM actor WHERE id =:id")
     public abstract LiveData<Actor> getById(int id);

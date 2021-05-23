@@ -16,7 +16,10 @@ import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 
-@Entity(tableName = "performance",foreignKeys = @ForeignKey(entity = Geners.class, parentColumns = "id", childColumns = "genre_id"))
+import static androidx.room.ForeignKey.CASCADE;
+import static androidx.room.ForeignKey.SET_NULL;
+
+@Entity(tableName = "performance",foreignKeys = @ForeignKey(entity = Geners.class, parentColumns = "id", childColumns = "genre_id", onDelete = CASCADE, onUpdate = CASCADE))
 @TypeConverters({ConverterDateType.class})
 public class Performance extends CommonEntity{
     private String name;
@@ -98,16 +101,12 @@ public class Performance extends CommonEntity{
         return genreId;
     }
 
-
-
     public void setGenreId(int genreId) {
         if(genre!=null)
             this.genreId = genre.getId();
         else
             this.genreId = genreId;
     }
-
-
 
 
     public Geners getGenre() {

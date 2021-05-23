@@ -82,6 +82,34 @@ public class PerformanceViewModel extends AbstractCrudViewModel<Performance,Perf
         return scenaristListLiveData;
     }
 
+    public void ifNetworkConnectionOn(Context context){
+        genreRepository.getAllGenersFromApi(context);
+        actorRepository.getAllActorsFromApi(context);
+        scenaristRepository.getAllScenaristFromApi(context);
+        repository.getAllPerformancesFromApi(getApplication());
+//       Thread thread = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        });
+//       thread.start();
+//     //  thread.stop();
+//       new Thread(new Runnable() {
+//           @Override
+//           public void run() {
+//               repository.getAllPerformancesFromApi(context);
+//           }
+//       }).start();
+
+    }
+
+  /*  public LiveData<List<Performance>> getPerformancesFromRest(PerformanceService performanceService){
+        List<Performance> performances = performanceService.getAllPerformancesFromApi();
+        listLiveData = new MutableLiveData(performances);
+        return listLiveData;
+    }*/
+
 
     //адаптер для представления списка актеров в виде стринга
     @BindingAdapter("android:text")

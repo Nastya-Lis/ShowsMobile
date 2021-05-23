@@ -24,6 +24,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+//не используется
+
 public class ScenaristService {
     private final DatabaseShows databaseShows;
     private final ScenaristApi scenaristApi = NetworkSmth.getInstance().scenaristApi();
@@ -72,17 +74,6 @@ public class ScenaristService {
                 Log.d("apiPerform suckk","Something is going wrong"+t.getMessage() +t.getCause());
             }
         });
-    }
-
-    void addToDb(List<Scenarist> scenaristList){
-        for (Scenarist scenarist: scenaristList) {
-            databaseShows.scenaristDao().insert(scenarist);
-        }
-    }
-
-    public LiveData<List<Scenarist>> getScenaristsFromDb(){
-        getAllScenaristsFromApi();
-        return databaseShows.scenaristDao().getAll();
     }
 
 }

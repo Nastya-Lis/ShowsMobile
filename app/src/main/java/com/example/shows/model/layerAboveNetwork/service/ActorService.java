@@ -24,6 +24,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+//не используется
+
 public class ActorService {
 
     private final DatabaseShows databaseShows;

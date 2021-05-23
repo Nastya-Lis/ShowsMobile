@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetworkSmth {
     private static NetworkSmth mInstance;
-    private final String BASE_URL = "http://10.208.46.43:8080/";
+    private final String BASE_URL = "http://192.168.43.194:8080/";
     private Retrofit retrofit;
 
     public static NetworkSmth getInstance() {

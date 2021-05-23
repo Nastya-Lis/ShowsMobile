@@ -37,6 +37,7 @@ import com.example.shows.model.layerAboveNetwork.service.GenreService;
 import com.example.shows.model.layerAboveNetwork.service.PerformanceService;
 import com.example.shows.model.layerAboveNetwork.service.ScenaristService;
 import com.example.shows.model.layerAboveNetwork.service.UserService;
+import com.example.shows.utils.Utils;
 import com.example.shows.viewModel.PerformanceViewModel;
 import com.example.shows.views.FullyPerformActivity;
 import com.example.shows.views.login.recyclerViews.RecyclerAdapterPerformance;
@@ -74,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mainBinding.setLifecycleOwner(this);
 
+
+
         Geners geners = new Geners();
         geners.setNameType("Naked and funny");
 
@@ -85,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
         Scenarist scenarist = new Scenarist();
         scenarist.setName("Federiko Kastilo");
         scenarist.setBiography("Good boy");
-
 
 
         ActorPerformance actorPerformance = new ActorPerformance();
@@ -108,21 +110,29 @@ public class MainActivity extends AppCompatActivity {
         user.setEmail("babka@mail.ru");
       //  List<Performance> performances = new ArrayList<>();
 
-    /*    DatabaseShows databaseShows = DatabaseShows.getInstance(this);
+/*        DatabaseShows databaseShows = DatabaseShows.getInstance(this);
 
         AsyncTask.execute(
                 new Runnable() {
                     @Override
                     public void run() {
-                        databaseShows.userDao().insert(user);
+                       //databaseShows.genersDao().insert(geners);
+                        databaseShows.genersDao().deleteAllGeners();
+                        databaseShows.scenaristDao().deleteAllScenarist();
+                        databaseShows.actorDao().deleteAllActors();
+                        databaseShows.performanceDao().deleteAllPerformances();
+                       // databaseShows.genersDao().deleteAllGeners();
+
                     }
                 }
-        );
-*/
+        );*/
+
         recyclerAdapterPerformance = new RecyclerAdapterPerformance();
-
-
        performanceViewModel = ViewModelProviders.of(this).get(PerformanceViewModel.class);
+
+        if(Utils.isOnline(this)){
+            performanceViewModel.ifNetworkConnectionOn(this);
+        }
 
        performanceViewModel.getPerformancesFromDb().observe(this, new Observer<List<Performance>>() {
             @Override
@@ -134,16 +144,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
+/*
+       performanceViewModel.getPerformancesFromRest(performanceService).observe(this, new Observer<List<Performance>>() {
+           @Override
+           public void onChanged(List<Performance> performanceList) {
+               recyclerAdapterPerformance.setPerformanceList(performanceList);
+               mainBinding.performancesRecycler.setAdapter(recyclerAdapterPerformance);
+               mainBinding.performancesRecycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+           }
+       });
+*/
       // performances = performanceViewModel.getValuePerform().getValue();
 //
 //        recyclerAdapterPerformance = new RecyclerAdapterPerformance(performanceViewModel.getValuePerform().getValue());
 //        mainBinding.performancesRecycler.setAdapter(recyclerAdapterPerformance);
 //        mainBinding.performancesRecycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-
-
-
-
 
          /*  listLiveData.observe(this, new Observer<List<Performance>>() {
                @Override
@@ -163,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-     //   performanceService = new PerformanceService(this);
+     //  performanceService = new PerformanceService(this);
    //     scenaristService = new ScenaristService(this);
     //   actorService = new ActorService(this);
      //   genreService = new GenreService(this);
@@ -254,17 +269,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    void doAgainShit(){
-      /*  recyclerAdapterPerformance = new RecyclerAdapterPerformance(performanceList);
-        recyclerView.setAdapter(recyclerAdapterPerformance);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));*/
-    }
-
     public void reloadFromPerformApi(View view) {
-        listLiveData = performanceViewModel.getPerformancesFromDb();
-       performances =  performanceViewModel.getPerformancesFromDb().getValue();
+       // listLiveData = performanceViewModel.getPerformancesFromDb();
+      // performances =  performanceViewModel.getPerformancesFromDb().getValue();
 
 
+       // performanceService.getAllPerformancesFromApi();
 
      //  performanceViewModel.getPerformanceByIdFromDb(5).observe();
        // performanceList = performanceService.getPerformancesFromDb();

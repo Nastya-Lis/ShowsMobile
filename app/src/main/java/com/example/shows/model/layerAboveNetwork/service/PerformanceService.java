@@ -7,14 +7,17 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
+import com.example.shows.R;
 import com.example.shows.model.database.DatabaseShows;
 import com.example.shows.model.database.asyncClasses.PerformanceAsyncClass;
 import com.example.shows.model.database.asyncClasses.constForAsync.ConstVariable;
+import com.example.shows.model.database.dao.PerformanceDao;
 import com.example.shows.model.database.entity.Performance;
 import com.example.shows.model.layerAboveNetwork.mapping.PerformanceMapping;
 import com.example.shows.model.network.NetworkSmth;
 import com.example.shows.model.network.api.PerformanceApi;
 import com.example.shows.model.network.dto.PerformanceDto;
+import com.example.shows.repository.PerformanceRepository;
 import com.google.common.collect.Multiset;
 
 import org.mapstruct.Mapper;
@@ -30,11 +33,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import lombok.SneakyThrows;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-//ПОКА НЕ ЧАПАЙ
+//не используется
 
 public class PerformanceService {
     private final DatabaseShows databaseShows;
@@ -47,34 +51,56 @@ public class PerformanceService {
     }
 
     public void getAllPerformancesFromApi(){
+
+      // List<PerformanceDto> performanceList = performanceApi.getAllPerformances().execute().body();
+
+        //PerformanceMapping mapper = Mappers.getMapper(PerformanceMapping.class);
+        //List<Performance> performances = new ArrayList<>();
+
        performanceApi.getAllPerformances().enqueue(new Callback<List<PerformanceDto>>() {
 
             @Override
             public void onResponse(Call<List<PerformanceDto>> call, Response<List<PerformanceDto>> response) {
 
-                    //List<PerformanceDto> performanceDtos = response.body().stream().findFirst();
                     PerformanceMapping mapper = Mappers.getMapper(PerformanceMapping.class);
                     List<Performance> performances = mapper.dtoesToEntities(response.body());
                     if(response.body().isEmpty()){
                         Log.d("Padla pustaiaa","yeeep");
                     }
                     Log.d("apiPerform fuccc","yeeep");
-                 //   addToDb(performances);
+
+
+
+                  //  insertPerformAsyncTask .execute(performances);
+                 //   PerformanceRepository repository = new PerformanceRepository(context);
+
+                   /* AsyncTask.execute(
+                            new Runnable() {
+                                @Override
+                                public void run() {
+                                    Optional<Performance> opt = repository.checkIsExistFirstPerform();
+                                    if(opt != null){
+                                        repository.deleteAllPerformance();
+                                    }
+                                    for (Performance performance:performances) {
+                                        repository.insert(performance,null);
+                                    }
+                                }
+                            }
+                    );*/
+
 
                // Performance performance = mapper.dtoToEntity(response.body().get(0));
-               /* Log.d("performance","wooot:"
-                        + performance.getDescription() + performance.getId());*/
+//                Log.d("performance","wooot:"
+//                        + performance.getDescription() + performance.getId());
 
-                 if(performances.size()!=0){
-                    for (Performance performance: performances) {
-
-                        Log.d(String.valueOf("pipi"),"performances:"
-                                + performance.getName()+ " " + performance.getAmountTickets() + " "
-                                +performance.getId());
-
-                    }
-                }
-
+//                 if(performances.size()!=0){
+//                    for (Performance performance: performances) {
+//                       Log.d(String.valueOf("pipi"),"performances:"
+//                                + performance.getName()+ " " + performance.getAmountTickets() + " "
+//                                +performance.getId());
+//                    }
+//                }
              //    addToDb(performances);
 
             }
@@ -84,7 +110,31 @@ public class PerformanceService {
                 Log.d("apiPerform suckk","Something is going wrong"+t.getMessage() +t.getCause());
             }
         });
+
+
+
     }
+
+
+    private static class insertPerformAsyncTask extends AsyncTask<List<Performance>, Void, Void> {
+
+        private PerformanceDao mAsyncTaskDao;
+
+        insertPerformAsyncTask(PerformanceDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final List<Performance>... params) {
+            List<Performance> performanceList = params[0];
+            for (Performance performance: performanceList) {
+                mAsyncTaskDao.insert(performance);
+            }
+            //mAsyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
+
 
     void addToDb(List<Performance> performanceList){
 

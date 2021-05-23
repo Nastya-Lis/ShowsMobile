@@ -25,6 +25,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+//не используется
+
 public class GenreService {
     private final DatabaseShows databaseShows;
     private final GenreApi genreApi = NetworkSmth.getInstance().genreApi();

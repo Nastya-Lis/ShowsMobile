@@ -5,10 +5,12 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import java.io.Serializable;
 
+import static androidx.room.ForeignKey.CASCADE;
+
 @Entity(tableName = "scenarist_performance",primaryKeys = {"scenarist_id","performance_id"},
 foreignKeys = {
-        @ForeignKey(entity = Scenarist.class, parentColumns = "id", childColumns = "scenarist_id"),
-        @ForeignKey(entity = Performance.class,parentColumns = "id", childColumns = "performance_id")
+        @ForeignKey(entity = Scenarist.class, parentColumns = "id", childColumns = "scenarist_id", onDelete = CASCADE, onUpdate = CASCADE),
+        @ForeignKey(entity = Performance.class,parentColumns = "id", childColumns = "performance_id", onDelete = CASCADE, onUpdate = CASCADE)
 })
 public class ScenaristPerformance implements Serializable {
     private int scenarist_id;

@@ -19,4 +19,7 @@ public abstract class ScenaristDao extends CommonDao<Scenarist>{
     @Override
     @Query("SELECT * FROM scenarist WHERE id=:id")
     public abstract LiveData<Scenarist> getById(int id);
+
+    @Query("DELETE FROM scenarist")
+    public abstract void deleteAllScenarist();
 }
