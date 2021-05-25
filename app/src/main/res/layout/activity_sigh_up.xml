@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+        <variable name = "vmSignUp"
+            type = "com.example.shows.viewModel.SignUpViewModel"/>
+    </data>
+
+<androidx.appcompat.widget.LinearLayoutCompat
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.login.SighUpActivity">
+    tools:context=".views.login.SignUpActivity">
 
     <TextView
         android:id="@+id/reg_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="registration"
+        android:text="Registration"
         android:textAlignment="center"
         android:textSize="70px"
         android:layout_marginStart="25dp"
@@ -23,13 +30,13 @@
         android:id="@+id/tv_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="smthh"
+        android:text="присоединяйся"
         android:textSize="17sp"
         android:layout_marginStart="25dp"
         android:layout_marginBottom="50dp"/>
 
     <EditText
-        android:id="@+id/et_name"
+        android:id="@+id/reg_name"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="Login"
@@ -42,7 +49,7 @@
         android:textSize="15sp" />
 
     <EditText
-        android:id="@+id/et_email"
+        android:id="@+id/reg_email"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="Email"
@@ -55,7 +62,7 @@
         android:textSize="15sp" />
 
     <EditText
-        android:id="@+id/et_password"
+        android:id="@+id/reg_password"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="Password"
@@ -68,7 +75,7 @@
         android:textSize="15sp" />
 
     <EditText
-        android:id="@+id/et_repassword"
+        android:id="@+id/reg_repassword"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="Repeate password"
@@ -93,6 +100,7 @@
             android:layout_marginBottom="30dp"
             android:layout_centerInParent="true"
             android:textColor="@android:color/white"
+            android:onClick="registrFunc"
             android:text="Register"/>
 
 
@@ -104,8 +112,11 @@
             android:textSize="15sp"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp"
+            android:onClick="goToLoginPage"
+            />
 
     </RelativeLayout>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

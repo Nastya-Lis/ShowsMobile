@@ -22,6 +22,11 @@ public class User extends CommonEntity{
     @ColumnInfo(name = "role_id")
     private int roleId;
 
+
+    public void setRoleId(int roleId) {
+        if(role!=null)
+            this.roleId = role.getId();
+    }
     @Ignore
     private Role role;
 

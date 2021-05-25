@@ -39,6 +39,9 @@ public class Booking extends CommonEntity{
     }
 
     public void setUserId(int userId) {
+       /* if(user!=null)
+            this.userId = user.getId();
+        else*/
         this.userId = userId;
     }
 
@@ -47,24 +50,46 @@ public class Booking extends CommonEntity{
     }
 
     public void setPerformanceId(int performanceId) {
+      /*  if(performance!=null)
+            this.performanceId = performance.getId();
+        else*/
         this.performanceId = performanceId;
     }
 
     public User getUser() {
+        if(userId!=0){
+            user = new User();
+            user.setId(userId);
+        }
         return user;
     }
 
     public void setUser(User user) {
+        if(userId!=0) {
+            this.user = new User();
+            this.user.setId(userId);
+        }
+        else
         this.user = user;
     }
 
     public Performance getPerformance() {
+        if(userId!=0)
+        {
+            performance = new Performance();
+            //Performance performanceNew = new Performance();
+            performance.setId(userId);
+        }
         return performance;
     }
 
-    public void setPerformance(Performance performance) {
+    public void setPerformance(Performance performance)
+    {
+        if(performanceId!=0) {
+            this.performance = new Performance();
+            this.performance.setId(userId);
+        }
+        else
         this.performance = performance;
     }
-
-
 }

@@ -20,6 +20,13 @@ public abstract class UserDao extends CommonDao<User>{
     @Query("SELECT * FROM user WHERE id=:id")
     public abstract LiveData<User> getById(int id);
 
+    @Query("DELETE FROM user")
+    public abstract void deleteAllUsers();
+
+
+    @Query("SELECT * FROM user LIMIT 1")
+    public abstract LiveData<User> getFirstUser();
+
     @Query("SELECT * FROM user WHERE email =:email And password=:password Limit 1")
     public abstract LiveData<User> getByPasswordAndEmail(String email, String password);
 

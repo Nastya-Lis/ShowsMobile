@@ -20,9 +20,15 @@
         android:id="@+id/bookingCheck"
         android:icon="@android:drawable/ic_dialog_email"
         app:showAsAction="always"
-        android:title="hui"
+        android:title="Booking"
         >
     </item>
 
+    <item
+        android:id="@+id/logOut"
+        app:showAsAction="always"
+        android:title="выход"
+        >
+    </item>
 
 </menu>

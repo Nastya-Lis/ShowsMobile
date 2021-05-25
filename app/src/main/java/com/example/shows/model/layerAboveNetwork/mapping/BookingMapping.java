@@ -11,20 +11,24 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.Named;
 
+import java.util.List;
+
 @Mapper(uses = {PerformanceMapping.class,UserMapping.class})
 public interface BookingMapping {
     @Mappings({
-            @Mapping(target = "performance", source = "performanceId",qualifiedByName = "idToEPerform"),
-            @Mapping(target = "user", source = "userId",qualifiedByName = "idToEUser")
+            @Mapping(target = "performance", source = "dto.performance",qualifiedByName = "idToEPerform"),
+            @Mapping(target = "user", source = "dto.user",qualifiedByName = "idToEUser")
     })
     Booking dtoToEntity(BookingDto dto);
 
     @Mappings({
-            @Mapping(target = "performanceId", source = "performance", qualifiedByName = "eToIdPerform"),
-            @Mapping(target = "userId", source = "user",  qualifiedByName = "eToIdUser" )
+            @Mapping(target = "performance", source = "booking.performance", qualifiedByName = "eToIdPerform"),
+            @Mapping(target = "user", source = "booking.user",  qualifiedByName = "eToIdUser" )
     })
     BookingDto entityToDto(Booking booking);
 
+
+    List<Booking> dtoesToEntities(List<BookingDto> dtoes);
 
     @Named("idToEPerform")
     default Performance idToEPerform(Integer id){
@@ -35,6 +39,7 @@ public interface BookingMapping {
 
     @Named("eToIdPerform")
     default Integer eToIdPerform(Performance performance){
+
         return performance.getId();
     }
 
@@ -48,6 +53,7 @@ public interface BookingMapping {
 
     @Named("eToIdUser")
     default Integer eToIdUser(User user){
+
         return user.getId();
     }
 

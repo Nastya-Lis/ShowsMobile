@@ -1,6 +1,7 @@
 package com.example.shows.viewModel;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -10,6 +11,7 @@ import com.example.shows.model.database.dao.UserDao;
 import com.example.shows.model.database.entity.Booking;
 import com.example.shows.model.database.entity.Performance;
 import com.example.shows.model.database.entity.User;
+import com.example.shows.model.network.dto.BookingDto;
 import com.example.shows.repository.BookingRepository;
 import com.example.shows.repository.PerformanceRepository;
 import com.example.shows.repository.UserRepository;
@@ -23,6 +25,8 @@ public class BookingViewModel extends AbstractCrudViewModel<Booking, BookingRepo
     BookingRepository bookingRepository;
     PerformanceRepository performanceRepository;
     UserRepository userRepository;
+
+    MutableLiveData<Boolean> isSuccess;
 
     public MutableLiveData<Booking> bookingLiveData;
 
@@ -42,6 +46,15 @@ public class BookingViewModel extends AbstractCrudViewModel<Booking, BookingRepo
         return  userLiveData;
     }
 
+    public void ifNetworkOn(Context context){
+        bookingRepository.getAllBookingFromApi(3,getApplication());
+    }
+
+    public LiveData<User> getCurrentUserFromDb(){
+        userLiveData = userRepository.getFirstUser();
+        return userLiveData;
+    }
+
     public BookingViewModel(@NonNull Application application) {
         super(application);
         bookingRepository = new BookingRepository(application);
@@ -55,6 +68,13 @@ public class BookingViewModel extends AbstractCrudViewModel<Booking, BookingRepo
         booking.setPerformanceId(idPerform);
         bookingLiveData.postValue(booking);
 
+    }
+
+    public void pushToServer(Booking booking){
+//        Integer amountToSend = booking.getAmount();
+//        Integer idUserToSend = booking.getUserId();
+//        Integer idPerformanceToSend = booking.getPerformanceId();
+        bookingRepository.pushToServerBooking(booking);
     }
 
     public void insertBookingLiveData(){

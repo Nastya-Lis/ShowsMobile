@@ -19,7 +19,7 @@ import java.util.List;
 import static androidx.room.ForeignKey.CASCADE;
 import static androidx.room.ForeignKey.SET_NULL;
 
-@Entity(tableName = "performance",foreignKeys = @ForeignKey(entity = Geners.class, parentColumns = "id", childColumns = "genre_id", onDelete = CASCADE, onUpdate = CASCADE))
+@Entity(tableName = "performance",foreignKeys = @ForeignKey(entity = Geners.class, parentColumns = "id", childColumns = "genre_id", onDelete = CASCADE))
 @TypeConverters({ConverterDateType.class})
 public class Performance extends CommonEntity{
     private String name;

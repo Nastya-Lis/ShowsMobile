@@ -20,6 +20,7 @@ import com.example.shows.model.database.entity.Actor;
 import com.example.shows.model.database.entity.Geners;
 import com.example.shows.model.database.entity.Performance;
 import com.example.shows.model.database.entity.Scenarist;
+import com.example.shows.model.database.entity.User;
 import com.example.shows.viewModel.PerformanceViewModel;
 import com.example.shows.views.login.recyclerViews.RecyclerAdapterPerformance;
 
@@ -98,7 +99,14 @@ public class FullyPerformActivity extends AppCompatActivity {
     public void getBookingPage(View view){
         Intent intent = new Intent(this, BookingPageActivity.class);
         intent.putExtra(Performance.class.getSimpleName(), sending);
+        intent.putExtra(User.class.getSimpleName(),getCurrentUserFromBundle());
         startActivity(intent);
+    }
+
+    private User getCurrentUserFromBundle(){
+        Bundle bundle = getIntent().getExtras();
+        User user = (User) bundle.getSerializable(User.class.getSimpleName());
+        return user;
     }
 
 

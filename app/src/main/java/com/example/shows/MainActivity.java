@@ -39,7 +39,9 @@ import com.example.shows.model.layerAboveNetwork.service.ScenaristService;
 import com.example.shows.model.layerAboveNetwork.service.UserService;
 import com.example.shows.utils.Utils;
 import com.example.shows.viewModel.PerformanceViewModel;
+import com.example.shows.views.BookingPageActivity;
 import com.example.shows.views.FullyPerformActivity;
+import com.example.shows.views.login.LoginActivity;
 import com.example.shows.views.login.recyclerViews.RecyclerAdapterPerformance;
 import com.google.android.material.internal.ContextUtils;
 
@@ -67,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding mainBinding;
     PerformanceViewModel performanceViewModel;
 
+    User currentUser = new User();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
         mainBinding.setLifecycleOwner(this);
 
 
+  /*      User user11 = getUserFromLogin();
+        mainBinding.buttonReload.setText(user11.getLogin());*/
 
         Geners geners = new Geners();
         geners.setNameType("Naked and funny");
@@ -109,23 +115,27 @@ public class MainActivity extends AppCompatActivity {
         user.setPassword("1234");
         user.setEmail("babka@mail.ru");
       //  List<Performance> performances = new ArrayList<>();
-
-/*        DatabaseShows databaseShows = DatabaseShows.getInstance(this);
+/*
+        DatabaseShows databaseShows = DatabaseShows.getInstance(this);
 
         AsyncTask.execute(
                 new Runnable() {
                     @Override
                     public void run() {
-                       //databaseShows.genersDao().insert(geners);
-                        databaseShows.genersDao().deleteAllGeners();
+                        //databaseShows.genersDao().insert(geners);
                         databaseShows.scenaristDao().deleteAllScenarist();
-                        databaseShows.actorDao().deleteAllActors();
+                        databaseShows.genersDao().deleteAllGeners();
                         databaseShows.performanceDao().deleteAllPerformances();
+
+                        databaseShows.actorDao().deleteAllActors();
+
+                        databaseShows.bookingDao().deleteAllBookings();
                        // databaseShows.genersDao().deleteAllGeners();
 
                     }
                 }
-        );*/
+        );
+*/
 
         recyclerAdapterPerformance = new RecyclerAdapterPerformance();
        performanceViewModel = ViewModelProviders.of(this).get(PerformanceViewModel.class);
@@ -133,8 +143,7 @@ public class MainActivity extends AppCompatActivity {
         if(Utils.isOnline(this)){
             performanceViewModel.ifNetworkConnectionOn(this);
         }
-
-       performanceViewModel.getPerformancesFromDb().observe(this, new Observer<List<Performance>>() {
+       performanceViewModel.getPerformancesFromDb().observe(this,new Observer<List<Performance>>() {
             @Override
             public void onChanged(List<Performance> performanceList) {
                 recyclerAdapterPerformance.setPerformanceList(performanceList);
@@ -142,6 +151,18 @@ public class MainActivity extends AppCompatActivity {
                 mainBinding.performancesRecycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
             }
         });
+
+
+        performanceViewModel.getCurrentUser().observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                mainBinding.buttonReload.setText(user.getLogin());
+                currentUser = user;
+            }
+        });
+
+        performanceViewModel.getPerformancesFromDb();
+        performanceViewModel.getCurrentUser();
 
 
 /*
@@ -176,8 +197,6 @@ public class MainActivity extends AppCompatActivity {
             recyclerView.setAdapter(recyclerAdapterPerformance);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));*/
 
-
-
      //  performanceService = new PerformanceService(this);
    //     scenaristService = new ScenaristService(this);
     //   actorService = new ActorService(this);
@@ -199,7 +218,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
       /*  if(listLiveData!=null) {
             if(listLiveData.getValue()!=null) {
                 recyclerAdapterPerformance = new RecyclerAdapterPerformance(listLiveData.getValue());
@@ -207,38 +225,24 @@ public class MainActivity extends AppCompatActivity {
                 recyclerView.setLayoutManager(new LinearLayoutManager(this));
             }
         }*/
-
         creationOfPopupMenu();
     }
+
+
+/*    private User getUserFromLogin(){
+        Bundle bundle = getIntent().getExtras();
+        User getUser = (User) bundle.getSerializable(User.class.getSimpleName());
+        return getUser;
+    }*/
 
 
     private void creationOfPopupMenu() {
         recyclerAdapterPerformance.setOnPerformanceClickListener(performance -> {
             Intent intent = new Intent(this, FullyPerformActivity.class);
+            intent.putExtra(User.class.getSimpleName(),currentUser);
             intent.putExtra(Performance.class.getSimpleName(), performance);
             startActivity(intent);
         });
-/*
-
-        birthdayManAdapter.setOnBirthManLongClickListener((birthDayMan, view) -> {
-            popupMenu = new PopupMenu(this, view);
-            popupMenu.inflate(R.menu.context_menu);
-            popupMenu.setOnMenuItemClickListener(menuItem -> {
-                switch (menuItem.getItemId()) {
-                    case R.id.editId:
-                        editRecipe(birthDayMan);
-                        break;
-                    case R.id.deleteId:
-                        deleteRecipe(birthDayMan);
-                        break;
-                }
-                return true;
-            });
-            popupMenu.show();
-            return true;
-        });
-*/
-
     }
 
     @Override
@@ -253,18 +257,30 @@ public class MainActivity extends AppCompatActivity {
             case R.id.filter:
 //                Intent intent1 = new Intent(MainActivity.this, SortActivity.class);
 //                startActivity(intent1);
+                Intent intentToLog = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intentToLog);
+
                 break;
-            case R.id.bookingCheck:
+                case R.id.bookingCheck:
+                  /*  Intent intent2 =  new Intent(MainActivity.this, BookingPageActivity.class);
+                    intent2.putExtra("UserId",currentUser.getId());
+                    startActivity(intent2);*/
 //                Intent intent2 = new Intent(MainActivity.this, TemplateCreateActivity.class);
 //                startActivity(intent2);
                 break;
-            case R.id.searching:
+
+                case R.id.searching:
                /* Intent intent = new Intent(this, NotificationService.class);
                 intent.putExtra("Date", dataPickFormat);
                 startService(intent);*/
-                break;
-        }
+                    break;
+            case R.id.logOut:
+                //дропнуть все таблицы в бд
+                //и  скипунть себя на форму логина и пароля
 
+                break;
+
+        }
         return super.onOptionsItemSelected(item);
     }
 

@@ -16,11 +16,13 @@ import com.example.shows.model.database.entity.Actor;
 import com.example.shows.model.database.entity.Geners;
 import com.example.shows.model.database.entity.Performance;
 import com.example.shows.model.database.entity.Scenarist;
+import com.example.shows.model.database.entity.User;
 import com.example.shows.model.layerAboveNetwork.service.PerformanceService;
 import com.example.shows.repository.ActorRepository;
 import com.example.shows.repository.GenreRepository;
 import com.example.shows.repository.PerformanceRepository;
 import com.example.shows.repository.ScenaristRepository;
+import com.example.shows.repository.UserRepository;
 
 import java.util.List;
 
@@ -34,10 +36,12 @@ public class PerformanceViewModel extends AbstractCrudViewModel<Performance,Perf
     GenreRepository genreRepository;
     ActorRepository actorRepository;
     ScenaristRepository scenaristRepository;
+    UserRepository userRepository;
 
     public LiveData<Geners> genersLiveData;
     public LiveData<List<Actor>> actorsListLiveData;
     public LiveData<List<Scenarist>> scenaristListLiveData;
+    public LiveData<User> userLiveData;
 
     public PerformanceViewModel(@NonNull Application application) {
         super(application);
@@ -45,11 +49,18 @@ public class PerformanceViewModel extends AbstractCrudViewModel<Performance,Perf
         genreRepository = new GenreRepository(application);
         actorRepository = new ActorRepository(application);
         scenaristRepository = new ScenaristRepository(application);
+        userRepository = new UserRepository(application);
       //  genersLiveData = genreRepository.getFirstGenre();
         listLiveData = repository.getAllPerformances();
         justOneLiveDataElement = repository.getPerformanceFirst();
     }
 
+
+    //взять текущего юзера, записанного в бд, в случае, если нет доступа к инету
+    public LiveData<User> getCurrentUser(){
+        userLiveData =  userRepository.getFirstUser();
+        return userLiveData;
+    }
 
     //получение всех спектаклей из бд
     public LiveData<List<Performance>> getPerformancesFromDb() {
@@ -109,7 +120,6 @@ public class PerformanceViewModel extends AbstractCrudViewModel<Performance,Perf
         listLiveData = new MutableLiveData(performances);
         return listLiveData;
     }*/
-
 
     //адаптер для представления списка актеров в виде стринга
     @BindingAdapter("android:text")

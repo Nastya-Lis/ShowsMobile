@@ -13,6 +13,6 @@ public class UserDto extends AbstractDto{
     private String login;
     private String email;
     private String password;
-    private Collection<Booking> bookings;
-    private Role role;
+    private Collection<BookingDto> bookings;
+    private Integer roleId;
 }

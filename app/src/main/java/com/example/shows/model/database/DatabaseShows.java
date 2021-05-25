@@ -10,6 +10,8 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.shows.model.database.contract.DbTriggers;
+import com.example.shows.model.database.contract.RoleType;
 import com.example.shows.model.database.dao.ActorDao;
 import com.example.shows.model.database.dao.ActorPerformanceDao;
 import com.example.shows.model.database.dao.BookingDao;
@@ -30,7 +32,7 @@ import com.example.shows.model.database.entity.converter.ConverterDateType;
 import com.example.shows.model.layerAboveNetwork.service.PerformanceService;
 
 @Database(entities = {Actor.class, ActorPerformance.class, Booking.class, Geners.class,
-        Performance.class, Scenarist.class, ScenaristPerformance.class, User.class}, version = 6)
+        Performance.class, Scenarist.class, ScenaristPerformance.class, User.class}, version = 8)
 @TypeConverters({ConverterDateType.class})
 public abstract class DatabaseShows extends RoomDatabase {
     public abstract ActorDao actorDao();
@@ -53,6 +55,12 @@ public abstract class DatabaseShows extends RoomDatabase {
                 nameDB).fallbackToDestructiveMigration().addCallback(sRoomDatabaseCallback)
                 .build();
         return INSTANCE;
+    }
+
+    private void createRoles(SupportSQLiteDatabase db){
+        for(RoleType roleType : RoleType.values()){
+            db.execSQL(DbTriggers.getInsertRole(roleType));
+        }
     }
 
     private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback(){

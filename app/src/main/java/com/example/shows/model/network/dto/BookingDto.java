@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class BookingDto extends AbstractDto{
     private int amount;
-    private int userId;
-    private int performanceId;
+    private int user;
+    private int performance;
 }
