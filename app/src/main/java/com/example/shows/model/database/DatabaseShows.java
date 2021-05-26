@@ -32,7 +32,7 @@ import com.example.shows.model.database.entity.converter.ConverterDateType;
 import com.example.shows.model.layerAboveNetwork.service.PerformanceService;
 
 @Database(entities = {Actor.class, ActorPerformance.class, Booking.class, Geners.class,
-        Performance.class, Scenarist.class, ScenaristPerformance.class, User.class}, version = 8)
+        Performance.class, Scenarist.class, ScenaristPerformance.class, User.class}, version = 9)
 @TypeConverters({ConverterDateType.class})
 public abstract class DatabaseShows extends RoomDatabase {
     public abstract ActorDao actorDao();

@@ -30,4 +30,8 @@ public abstract class ActorPerformanceDao{
     @Query("SELECT * FROM performance Where id In (SELECT performance_id FROM actor_performance Where actor_id =:actorId)")
     public abstract LiveData<List<Performance>> getPerformancesByActor(int actorId);
 
+
+    @Query("SELECT * FROM performance Where id In (SELECT performance_id FROM actor_performance Where actor_id =:actorId)")
+    public abstract List<Performance> getPerformancesByActorNotLiveData(int actorId);
+
 }

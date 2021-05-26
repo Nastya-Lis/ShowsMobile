@@ -35,8 +35,8 @@ import retrofit2.Response;
 
 public class ScenaristRepository extends CommonRepository<Scenarist>{
 
-    ScenaristDao scenaristDao;
-    ScenaristPerformanceDao scenaristPerformance;
+    public ScenaristDao scenaristDao;
+    public ScenaristPerformanceDao scenaristPerformance;
 
     LiveData<List<Scenarist>> scenaristListLiveData;
 

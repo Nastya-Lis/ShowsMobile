@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         loginViewModel.getCurrentUser();
-/*        DatabaseShows databaseShows = DatabaseShows.getInstance(this);
+ /*       DatabaseShows databaseShows = DatabaseShows.getInstance(this);
 
        AsyncTask.execute(
                 new Runnable() {
@@ -75,8 +75,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     }
                 }
-        );*/
-
+        );
+*/
     }
 
     public void loginFunc(View view) {

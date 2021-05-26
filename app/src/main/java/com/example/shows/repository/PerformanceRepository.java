@@ -8,6 +8,8 @@ package com.example.shows.repository;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteException;
+import android.graphics.Path;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -18,8 +20,13 @@ import com.example.shows.model.database.asyncClasses.OperationAsyncClass;
 import com.example.shows.model.database.asyncClasses.PerformanceAsyncClass;
 import com.example.shows.model.database.asyncClasses.QueryAsyncClass;
 import com.example.shows.model.database.asyncClasses.QueryForCollectionAsyncClass;
+import com.example.shows.model.database.dao.ActorDao;
+import com.example.shows.model.database.dao.ActorDao_Impl;
+import com.example.shows.model.database.dao.ActorPerformanceDao;
+import com.example.shows.model.database.dao.ActorPerformanceDao_Impl;
 import com.example.shows.model.database.dao.PerformanceDao;
 import com.example.shows.model.database.dao.PerformanceDao_Impl;
+import com.example.shows.model.database.entity.Actor;
 import com.example.shows.model.database.entity.Performance;
 import com.example.shows.model.layerAboveNetwork.mapping.PerformanceMapping;
 import com.example.shows.model.network.NetworkSmth;
@@ -41,6 +48,10 @@ import retrofit2.Response;
 public class PerformanceRepository extends CommonRepository<Performance>{
 
     private PerformanceDao performanceDao;
+    private ActorDao actorDao;
+    private ActorPerformanceDao actorPerformanceDao;
+
+    private LiveData<Actor> actorLiveData;
 
     private Optional<Performance> optionalPerformance;
 
@@ -53,11 +64,29 @@ public class PerformanceRepository extends CommonRepository<Performance>{
 
     private LiveData<List<Performance>> listPerformanceForApiLiveData;
 
+  /*  public Actor getActorByName(){
+
+    }*/
+
+    //спектакли по имени актера
+    public LiveData<List<Performance>> getPerformancesByActorId(Integer idActor){
+     //   LiveData<Optional<Actor>> actor = actorDao.findActorByName(name);
+        performancesList = actorPerformanceDao.getPerformancesByActor(idActor);
+        return performancesList;
+    }
+
+//    public LiveData<Actor> getActorByName(String name){
+//        actorLiveData = actorDao.findActorByName(name);
+//        return actorLiveData;
+//    }
 
     public PerformanceRepository(Context context) {
         super(context);
         performanceDao = new PerformanceDao_Impl(database);
+        actorDao = new ActorDao_Impl(database);
+        actorPerformanceDao = new ActorPerformanceDao_Impl(database);
         performancesList = new MutableLiveData<>();
+        actorLiveData = new MutableLiveData<>();
         performance = new MutableLiveData<>();
     }
 
@@ -169,10 +198,7 @@ public class PerformanceRepository extends CommonRepository<Performance>{
         });
 
 
-
     }
-
-
 
 
   /*  public MutableLiveData<Performance> getPerformanceMutableById(Integer id){
@@ -200,5 +226,6 @@ public class PerformanceRepository extends CommonRepository<Performance>{
                 performanceDao,onError,PerformanceDao::delete).execute(item);
         return;
     }
+
 
 }

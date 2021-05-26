@@ -9,6 +9,7 @@ import com.example.shows.model.database.entity.Actor;
 import com.example.shows.model.database.entity.Performance;
 
 import java.util.List;
+import java.util.Optional;
 
 @Dao
 public abstract class ActorDao extends CommonDao<Actor>{
@@ -24,5 +25,5 @@ public abstract class ActorDao extends CommonDao<Actor>{
     public abstract LiveData<Actor> getById(int id);
 
     @Query("SELECT * FROM actor WHERE name like :name")
-    public abstract LiveData<Actor> findActorByName(String name);
+    public abstract Actor findActorByName(String name);
 }

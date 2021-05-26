@@ -9,26 +9,5 @@
         android:title="Search"
         >
     </item>
-    <item
-        android:id="@+id/filter"
-        android:icon="@android:drawable/ic_menu_sort_by_size"
-        app:showAsAction="always"
-        android:title="filter"
-        >
-    </item>
-    <item
-        android:id="@+id/bookingCheck"
-        android:icon="@android:drawable/ic_dialog_email"
-        app:showAsAction="always"
-        android:title="Booking"
-        >
-    </item>
-
-    <item
-        android:id="@+id/logOut"
-        app:showAsAction="always"
-        android:title="выход"
-        >
-    </item>
 
 </menu>

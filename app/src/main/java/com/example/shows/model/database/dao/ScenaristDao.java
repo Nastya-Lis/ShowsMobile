@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Query;
 
+import com.example.shows.model.database.entity.Actor;
 import com.example.shows.model.database.entity.Performance;
 import com.example.shows.model.database.entity.Scenarist;
 
@@ -22,4 +23,7 @@ public abstract class ScenaristDao extends CommonDao<Scenarist>{
 
     @Query("DELETE FROM scenarist")
     public abstract void deleteAllScenarist();
+
+    @Query("SELECT * FROM scenarist WHERE name like :name")
+    public abstract Scenarist findScenaristByName(String name);
 }

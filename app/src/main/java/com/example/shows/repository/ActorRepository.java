@@ -36,8 +36,8 @@ import retrofit2.Response;
 
 public class ActorRepository extends CommonRepository<Actor>{
 
-    ActorDao actorDao;
-    ActorPerformanceDao actorPerformanceDao;
+    public ActorDao actorDao;
+    public ActorPerformanceDao actorPerformanceDao;
     private  LiveData<List<Actor>> actorsByPerformanceId;
 
     private LiveData<List<Actor>> actorList;

@@ -12,9 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Shows">
-        <activity android:name=".views.BookingPageActivity"></activity>
+        <activity android:name=".views.SearchingActivity"></activity>
+        <activity android:name=".views.BookingPageActivity" />
         <activity android:name=".views.FullyPerformActivity" />
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity" />
         <activity android:name=".views.login.SignUpActivity" /> <!-- <activity android:name=".views.login.LoginActivity" /> -->
         <!-- <activity -->
         <!-- android:name=".views.login.LoginActivity" -->

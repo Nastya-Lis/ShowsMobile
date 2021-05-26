@@ -41,6 +41,7 @@ import com.example.shows.utils.Utils;
 import com.example.shows.viewModel.PerformanceViewModel;
 import com.example.shows.views.BookingPageActivity;
 import com.example.shows.views.FullyPerformActivity;
+import com.example.shows.views.SearchingActivity;
 import com.example.shows.views.login.LoginActivity;
 import com.example.shows.views.login.recyclerViews.RecyclerAdapterPerformance;
 import com.google.android.material.internal.ContextUtils;
@@ -115,18 +116,17 @@ public class MainActivity extends AppCompatActivity {
         user.setPassword("1234");
         user.setEmail("babka@mail.ru");
       //  List<Performance> performances = new ArrayList<>();
-/*
-        DatabaseShows databaseShows = DatabaseShows.getInstance(this);
+/*        DatabaseShows databaseShows = DatabaseShows.getInstance(this);
 
         AsyncTask.execute(
                 new Runnable() {
                     @Override
                     public void run() {
                         //databaseShows.genersDao().insert(geners);
-                        databaseShows.scenaristDao().deleteAllScenarist();
+
                         databaseShows.genersDao().deleteAllGeners();
                         databaseShows.performanceDao().deleteAllPerformances();
-
+                        databaseShows.scenaristDao().deleteAllScenarist();
                         databaseShows.actorDao().deleteAllActors();
 
                         databaseShows.bookingDao().deleteAllBookings();
@@ -134,9 +134,7 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 }
-        );
-*/
-
+        );*/
         recyclerAdapterPerformance = new RecyclerAdapterPerformance();
        performanceViewModel = ViewModelProviders.of(this).get(PerformanceViewModel.class);
 
@@ -163,6 +161,8 @@ public class MainActivity extends AppCompatActivity {
 
         performanceViewModel.getPerformancesFromDb();
         performanceViewModel.getCurrentUser();
+
+
 
 
 /*
@@ -212,6 +212,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }*/
 
+
+
     }
 
 
@@ -254,31 +256,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()){
-            case R.id.filter:
-//                Intent intent1 = new Intent(MainActivity.this, SortActivity.class);
-//                startActivity(intent1);
-                Intent intentToLog = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intentToLog);
-
-                break;
-                case R.id.bookingCheck:
-                  /*  Intent intent2 =  new Intent(MainActivity.this, BookingPageActivity.class);
-                    intent2.putExtra("UserId",currentUser.getId());
-                    startActivity(intent2);*/
-//                Intent intent2 = new Intent(MainActivity.this, TemplateCreateActivity.class);
-//                startActivity(intent2);
-                break;
-
                 case R.id.searching:
-               /* Intent intent = new Intent(this, NotificationService.class);
-                intent.putExtra("Date", dataPickFormat);
-                startService(intent);*/
+                    Intent intent = new Intent(this, SearchingActivity.class);
+                    startActivity(intent);
                     break;
-            case R.id.logOut:
-                //дропнуть все таблицы в бд
-                //и  скипунть себя на форму логина и пароля
-
-                break;
 
         }
         return super.onOptionsItemSelected(item);

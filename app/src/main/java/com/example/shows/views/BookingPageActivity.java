@@ -20,6 +20,7 @@ import com.example.shows.model.database.entity.User;
 import com.example.shows.model.layerAboveNetwork.mapping.BookingMapping;
 import com.example.shows.model.network.dto.BookingDto;
 import com.example.shows.utils.Utils;
+import com.example.shows.utils.mailService.JavaMailApi;
 import com.example.shows.viewModel.BookingViewModel;
 import com.example.shows.viewModel.PerformanceViewModel;
 
@@ -114,10 +115,14 @@ public class BookingPageActivity extends AppCompatActivity {
         bookingViewModel.insertBookingLiveData();
         bookingViewModel.pushToServer(bookingToSend);
         if(Utils.isOnline(this) == true){
+
+            JavaMailApi javaMailApi = new JavaMailApi(getCurrentUserFromBundle().getEmail(),
+                    "Бронирование билетов", getPerformanceFromBundle());
+            javaMailApi.execute();
             Toast.makeText(this,"Success booking",Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, MainActivity.class);
+            /*Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
-            finish();
+            finish();*/
         }
     }
 

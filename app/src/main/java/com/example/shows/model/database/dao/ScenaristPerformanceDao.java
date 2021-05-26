@@ -31,4 +31,7 @@ public abstract class ScenaristPerformanceDao {
 
     @Query("SELECT * FROM performance Where id In (SELECT performance_id FROM scenarist_performance Where scenarist_id =:scenaristId)")
     public abstract LiveData<List<Performance>> getPerformancesByScenarist(int scenaristId);
+
+    @Query("SELECT * FROM performance Where id In (SELECT performance_id FROM scenarist_performance Where scenarist_id =:scenaristId)")
+    public abstract List<Performance> getPerformancesByScenaristNotLiveData(int scenaristId);
 }
