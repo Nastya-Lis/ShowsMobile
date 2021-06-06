@@ -31,9 +31,6 @@ public abstract class PerformanceDao extends CommonDao<Performance>{
     @Query("DELETE FROM performance")
     public abstract void deleteAllPerformances();
 
-/*    @Query("Select * from performance Where id=:id")
-    public abstract MutableLiveData<Performance> getByIdMutable(int id);*/
-
     @Query("Select * from performance Where id=:id")
     public abstract Optional<Performance> getByIdVersionTwo(int id);
 
@@ -43,5 +40,7 @@ public abstract class PerformanceDao extends CommonDao<Performance>{
     @Query("SELECT * FROM performance WHERE genre_id=:genreId")
     public abstract LiveData<List<Performance>> getByGenre(int genreId);
 
+    @Query("Select * from performance Where id=:id")
+    public abstract Performance getByIdWithoutLiveData(int id);
 
 }

@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetworkSmth {
     private static NetworkSmth mInstance;
-    private final String BASE_URL = "http://10.208.46.148:8080/";
+    private final String BASE_URL = "http://10.0.2.2:8080/";
     private Retrofit retrofit;
 
     public static NetworkSmth getInstance() {
@@ -25,14 +25,6 @@ public class NetworkSmth {
         }
         return mInstance;
     }
-
-
-   /* private NetworkSmth(){
-        retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-    }*/
-
 
 
     public BookingApi bookingApi(){

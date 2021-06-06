@@ -14,8 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-//ИУ КАКОЙ-ТО ФУФЕЛ
-
 public class PerformanceAsyncClass extends AsyncTask<Map<String, Context>,LiveData<List<Performance>>,LiveData<List<Performance>>> {
 
     @Override
@@ -35,13 +33,6 @@ public class PerformanceAsyncClass extends AsyncTask<Map<String, Context>,LiveDa
     @Override
     protected void onPostExecute(LiveData<List<Performance>> listLiveData) {
         super.onPostExecute(listLiveData);
-     //   return listLiveData;
     }
 
-    /*  @Override
-    protected LiveData<List<Performance>> doInBackground(String... strings) {
-        if(strings[0] == ConstVariable.INSERT){
-
-        }
-    }*/
 }

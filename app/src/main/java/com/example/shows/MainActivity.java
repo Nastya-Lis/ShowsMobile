@@ -53,20 +53,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
+
     RecyclerAdapterPerformance recyclerAdapterPerformance;
-    List<Performance> performanceList = null;
-    PerformanceService performanceService;
-    ActorService actorService;
-    ScenaristService scenaristService;
-    GenreService genreService;
-    UserService userService;
 
-    List<Performance> performances = new ArrayList<>();
-    LiveData<List<Performance>> listLiveData;
-
-
-    //trying in livedata
     private ActivityMainBinding mainBinding;
     PerformanceViewModel performanceViewModel;
 
@@ -80,42 +69,6 @@ public class MainActivity extends AppCompatActivity {
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mainBinding.setLifecycleOwner(this);
 
-
-  /*      User user11 = getUserFromLogin();
-        mainBinding.buttonReload.setText(user11.getLogin());*/
-
-        Geners geners = new Geners();
-        geners.setNameType("Naked and funny");
-
-        Actor actor = new Actor();
-        actor.setName("Dmitri Lze");
-        actor.setBiography("Just freakin idiot");
-
-
-        Scenarist scenarist = new Scenarist();
-        scenarist.setName("Federiko Kastilo");
-        scenarist.setBiography("Good boy");
-
-
-        ActorPerformance actorPerformance = new ActorPerformance();
-        actorPerformance.setActor_id(2);
-        actorPerformance.setPerformance_id(3);
-
-
-        ScenaristPerformance scenaristPerformance = new ScenaristPerformance();
-        scenaristPerformance.setScenarist_id(4);
-        scenaristPerformance.setPerformance_id(2);
-
-
-     /*
-        Role role = new Role();
-        role.setName("User");*/
-
-        User user = new User();
-        user.setLogin("Bublik");
-        user.setPassword("1234");
-        user.setEmail("babka@mail.ru");
-      //  List<Performance> performances = new ArrayList<>();
 /*        DatabaseShows databaseShows = DatabaseShows.getInstance(this);
 
         AsyncTask.execute(
@@ -150,68 +103,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        performanceViewModel.getCurrentUser().observe(this, new Observer<User>() {
+/*
+        performanceViewModel.getCurrentUser().observeForever( new Observer<User>() {
             @Override
             public void onChanged(User user) {
-                mainBinding.buttonReload.setText(user.getLogin());
+            //    mainBinding.buttonReload.setText(user.getLogin());
                 currentUser = user;
             }
-        });
+        });*/
 
         performanceViewModel.getPerformancesFromDb();
-        performanceViewModel.getCurrentUser();
-
-
-
-
-/*
-       performanceViewModel.getPerformancesFromRest(performanceService).observe(this, new Observer<List<Performance>>() {
-           @Override
-           public void onChanged(List<Performance> performanceList) {
-               recyclerAdapterPerformance.setPerformanceList(performanceList);
-               mainBinding.performancesRecycler.setAdapter(recyclerAdapterPerformance);
-               mainBinding.performancesRecycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-           }
-       });
-*/
-      // performances = performanceViewModel.getValuePerform().getValue();
-//
-//        recyclerAdapterPerformance = new RecyclerAdapterPerformance(performanceViewModel.getValuePerform().getValue());
-//        mainBinding.performancesRecycler.setAdapter(recyclerAdapterPerformance);
-//        mainBinding.performancesRecycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-
-         /*  listLiveData.observe(this, new Observer<List<Performance>>() {
-               @Override
-               public void onChanged(List<Performance> performanceList) {
-                   if (performanceList != null) {
-                       recyclerAdapterPerformance = new RecyclerAdapterPerformance(performanceList);
-                       mainBinding.performancesRecycler.setAdapter(recyclerAdapterPerformance);
-                       mainBinding.performancesRecycler.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                   }
-               }
-           });*/
-
-
-           /* recyclerAdapterPerformance = new RecyclerAdapterPerformance(performanceViewModel.getValuePerform().getValue());
-            recyclerView.setAdapter(recyclerAdapterPerformance);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));*/
-
-     //  performanceService = new PerformanceService(this);
-   //     scenaristService = new ScenaristService(this);
-    //   actorService = new ActorService(this);
-     //   genreService = new GenreService(this);
-    //    userService = new UserService(this);
-
-      /*  recyclerView = (RecyclerView) findViewById(R.id.performancesRecycler);
-        if(listLiveData!=null) {
-            if(listLiveData.getValue()!=null) {
-                recyclerAdapterPerformance = new RecyclerAdapterPerformance(listLiveData.getValue());
-                recyclerView.setAdapter(recyclerAdapterPerformance);
-                recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            }
-        }*/
-
+     //   performanceViewModel.getCurrentUser();
 
 
     }
@@ -220,28 +122,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-      /*  if(listLiveData!=null) {
-            if(listLiveData.getValue()!=null) {
-                recyclerAdapterPerformance = new RecyclerAdapterPerformance(listLiveData.getValue());
-                recyclerView.setAdapter(recyclerAdapterPerformance);
-                recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            }
-        }*/
         creationOfPopupMenu();
     }
-
-
-/*    private User getUserFromLogin(){
-        Bundle bundle = getIntent().getExtras();
-        User getUser = (User) bundle.getSerializable(User.class.getSimpleName());
-        return getUser;
-    }*/
 
 
     private void creationOfPopupMenu() {
         recyclerAdapterPerformance.setOnPerformanceClickListener(performance -> {
             Intent intent = new Intent(this, FullyPerformActivity.class);
-            intent.putExtra(User.class.getSimpleName(),currentUser);
+         //   intent.putExtra(User.class.getSimpleName(),currentUser);
+            intent.putExtra(User.class.getSimpleName(),performanceViewModel.getCurrentUserAsync());
             intent.putExtra(Performance.class.getSimpleName(), performance);
             startActivity(intent);
         });
@@ -266,20 +155,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void reloadFromPerformApi(View view) {
-       // listLiveData = performanceViewModel.getPerformancesFromDb();
-      // performances =  performanceViewModel.getPerformancesFromDb().getValue();
-
-
-       // performanceService.getAllPerformancesFromApi();
-
-     //  performanceViewModel.getPerformanceByIdFromDb(5).observe();
-       // performanceList = performanceService.getPerformancesFromDb();
-         //  doAgainShit();
-        //  performanceService.getAllPerformancesFromApi();
-      //  scenaristService.getAllScenaristsFromApi();
-       //  genreService.getAllGenresFromApi();
-     //   actorService.getAllActorsFromApi();
-     //     userService.getAllUsersFromApi();
-    }
 }

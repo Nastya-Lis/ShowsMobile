@@ -22,13 +22,6 @@ public interface GenerMapping {
     @Mapping(target = "performancesId", source = "performances", qualifiedByName = "entityToId")
     GenersDto entityToDto(Geners actor);
 
-    /* @Named("entityToId")
-     default Integer entityToId(Performances performance){
-         return performance.getId();
-     }
-
-    */
-
     List<Geners> dtoesToEntities(List<GenersDto> dtoes);
 
     @Named("entityToId")
@@ -38,11 +31,6 @@ public interface GenerMapping {
 
     @Named("idToEntity")
     default Collection<Performance> idToEntity(Collection<Integer> idCollection){
-        /*if(id == null)
-            return null;*/
-        //ArrayList<Integer> ids = (ArrayList<Integer>) idCollection;
-
-
         Collection<Performance> performancesCollection = new ArrayList<>();
 
         for (Integer id: idCollection) {
@@ -52,10 +40,7 @@ public interface GenerMapping {
                 performancesCollection.add(performances);
             }
         }
-
         return performancesCollection;
-       /*        performances.setId(id);
-        return performances;*/
     }
 
 }

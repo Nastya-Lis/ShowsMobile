@@ -60,16 +60,14 @@ public class SearchingActivity extends AppCompatActivity {
             }
         });
 
-   //     performanceViewModel.chaaaaange();
         adapterSpinner();
 
     }
 
     public void adapterSpinner(){
         List<String> collectionValueSpinner = new ArrayList<>();
-        collectionValueSpinner.add("Actor");
-        collectionValueSpinner.add("Scenarist");
-        collectionValueSpinner.add("Gener");
+        collectionValueSpinner.add("Актер");
+        collectionValueSpinner.add("Сценарист");
 
 
         Spinner categorySpinner = (Spinner) findViewById(R.id.categorySortSpinner);
@@ -82,7 +80,6 @@ public class SearchingActivity extends AppCompatActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         String selectedItem = adapterView.getSelectedItem().toString();
-                        //searchingBinding.searchingText.setText(selectedItem);
                         criteria = selectedItem;
 
                     }

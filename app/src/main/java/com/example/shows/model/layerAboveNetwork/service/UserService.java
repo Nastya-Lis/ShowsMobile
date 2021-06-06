@@ -32,17 +32,6 @@ public class UserService {
         databaseShows = DatabaseShows.getInstance(context);
     }
 
-
-  /*  public void takeDataFromApi(){
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                // All your networking logic
-                // should be here
-            }
-        });
-    }*/
-
     public void getAllUsersFromApi(){
         userApi.getAllUsers().enqueue(new Callback<List<UserDto>>() {
 
@@ -51,38 +40,15 @@ public class UserService {
                 UserMapping mapper = Mappers.getMapper(UserMapping.class);
                 List<User> users = mapper.dtoesToEntities(response.body());
                 if(response.body().isEmpty()){
-                    Log.d("Padla pustaiaa","yeeep");
+                    Log.d("userservice","success");
                 }
-                Log.d("apiPerform fuccc","yeeep");
-                //   addToDb(performances);
-
-                if(users.size()!=0){
-                    for (User user: users) {
-
-                        Log.d(String.valueOf("iii"),"actors:"
-                                + user.getRole()+ " " +user.getId() + " " + user.getEmail());
-
-                    }
-                }
-
             }
 
             @Override
             public void onFailure(Call<List<UserDto>> call, Throwable t) {
-                Log.d("apiPerform suckk","Something is going wrong"+t.getMessage() +t.getCause());
+                Log.d("userservice","Something is going wrong "+t.getMessage() +t.getCause());
             }
         });
-    }
-
-    void addToDb(List<User> usersList){
-        for (User user: usersList) {
-            databaseShows.userDao().insert(user);
-        }
-    }
-
-    public LiveData<List<User>> getUsersFromDb(){
-        getAllUsersFromApi();
-        return databaseShows.userDao().getAll();
     }
 
 }

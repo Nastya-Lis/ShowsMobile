@@ -101,14 +101,14 @@
             android:layout_centerInParent="true"
             android:textColor="@android:color/white"
             android:onClick="registrFunc"
-            android:text="Register"/>
+            android:text="Зарегистрироваться"/>
 
 
         <TextView
             android:id="@+id/swipeLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Swipe to the login page"
+            android:text="Перейти на страницу логина"
             android:textSize="15sp"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"

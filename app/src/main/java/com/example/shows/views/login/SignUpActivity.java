@@ -50,22 +50,23 @@ public class SignUpActivity extends AppCompatActivity {
     public void registrFunc(View view){
         if(sighUpBinding.regName.getText()!=null && sighUpBinding.regEmail.getText()!=null&&
                 sighUpBinding.regPassword.getText()!=null&&sighUpBinding.regRepassword.getText()!=null
-                && sighUpBinding.regName.getText().toString()!= ""
-                && sighUpBinding.regPassword.getText().toString() !=""){
+                && sighUpBinding.regEmail.getText().toString() != ""
+                && sighUpBinding.regEmail.getText().toString().contains("@")
+                && sighUpBinding.regPassword.getText().toString() !=""
+                && !sighUpBinding.regName.getText().toString().equals("")
+                && !sighUpBinding.regPassword.getText().toString().equals("")){
             User user = new User();
             user.setEmail(sighUpBinding.regEmail.getText().toString());
             user.setLogin(sighUpBinding.regName.getText().toString());
             user.setPassword(sighUpBinding.regPassword.getText().toString());
-            //user.setRole();
+
             UserMapping mapper = Mappers.getMapper(UserMapping.class);
             UserDto userDto = mapper.entityToDto(user);
             userDto.setRoleId(2);
             signUpViewModel.registration(userDto);
-            if(isSuccess== true){
+            if(isSuccess){
                 Intent intent = new Intent(this, LoginActivity.class);
-                // intent.putExtra(User.class.getSimpleName(), user);
                 startActivity(intent);
-               // finish();
             }
         }
     }

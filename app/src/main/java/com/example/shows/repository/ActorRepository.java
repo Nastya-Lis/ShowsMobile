@@ -67,21 +67,14 @@ public class ActorRepository extends CommonRepository<Actor>{
 
                 ActorMapping mapper = Mappers.getMapper(ActorMapping.class);
                 List<Actor> actors = mapper.dtoesToEntities(response.body());
-                if(response.body().isEmpty()){
-                    Log.d("Padla pustaiaa","yeeep");
-                }
-                Log.d("apiPerform fuccc","yeeep");
-
                 ActorRepository repository = new ActorRepository(context);
                 ActorPerformanceRepository actorPerformanceRepository = new ActorPerformanceRepository(context);
 
                 for (Actor actor: actors) {
-                    //Set<ActorPerformance> actorPerformanceSet = new HashSet<>();
                     for (Performance performance: actor.getPerformances()) {
                         ActorPerformance actorPerformance = new ActorPerformance();
                         actorPerformance.setActor_id(actor.getId());
                         actorPerformance.setPerformance_id(performance.getId());
-                        //actorPerformanceSet.add(actorPerformance);
                         actorPerformanceRepository.insert(actorPerformance, null);
                     };
                     repository.insert(actor,null);
@@ -90,7 +83,7 @@ public class ActorRepository extends CommonRepository<Actor>{
 
             @Override
             public void onFailure(Call<List<ActorDto>> call, Throwable t) {
-                Log.d("apiPerform suckk","Something is going wrong"+t.getMessage() +t.getCause());
+                Log.d("actor repository","Something is going wrong "+t.getMessage() +t.getCause());
             }
         });
     }

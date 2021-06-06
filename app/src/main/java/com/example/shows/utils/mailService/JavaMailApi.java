@@ -21,65 +21,38 @@ import javax.mail.internet.MimeMessage;
 
 import android.os.AsyncTask;
 
+import com.example.shows.model.database.entity.Booking;
 import com.example.shows.model.database.entity.Performance;
-
-/*public class JavaMailApi{
-
-}*/
 
 public class JavaMailApi extends AsyncTask<Void,Void,Void> {
 
-    //Variables
-    //private Context mContext;
     private Session mSession;
-
     private String mEmail;
     private String mSubject;
     private Performance performance;
+    private Booking booking;
     private String mMessage;
 
-    private ProgressDialog mProgressDialog;
 
-    //Constructor
-    public JavaMailApi(String mEmail, String mSubject, Performance performance) {
+    public JavaMailApi(String mEmail, String mSubject, Performance performance,Booking booking) {
       //  this.mContext = mContext;
         this.mEmail = mEmail;
         this.mSubject = mSubject;
         this.performance = performance;
-    }
-/*
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-        //Show progress dialog while sending email
-        mProgressDialog = ProgressDialog.show(mContext,"Sending message", "Please wait...",false,false);
+        this.booking = booking;
     }
 
-    @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
-        //Dismiss progress dialog when message successfully send
-        mProgressDialog.dismiss();
-
-        //Show success toast
-        Toast.makeText(mContext,"Message Sent",Toast.LENGTH_SHORT).show();
-    }
-*/
 
     @Override
     protected Void doInBackground(Void... params) {
-        //Creating properties
         Properties props = new Properties();
 
-        //Configuring properties for gmail
-        //If you are not using gmail you may need to change the values
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "465");
 
-        //Creating a new session
         mSession = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     //Authenticating the password
@@ -90,43 +63,16 @@ public class JavaMailApi extends AsyncTask<Void,Void,Void> {
 
 
         try {
-            //Creating MimeMessage object
             MimeMessage mm = new MimeMessage(mSession);
 
-            //Setting sender address
             mm.setFrom(new InternetAddress(MailConfigApi.EMAIL));
-            //Adding receiver
             mm.addRecipient(Message.RecipientType.TO, new InternetAddress(mEmail));
-            //Adding subject
             mm.setSubject(mSubject);
-            //Adding message
-
-            mMessage = "Вы забранировали " + performance.getAmountTickets() + " билетов на спектакль "
+            mMessage = "Вы забронировали " + booking.getAmount() + " билетов на спектакль "
                     + performance.getName() + ". Желаем хорошо провести время";
 
             mm.setText(mMessage);
-            //Sending email
             Transport.send(mm);
-
-//            BodyPart messageBodyPart = new MimeBodyPart();
-//
-//            messageBodyPart.setText(message);
-//
-//            Multipart multipart = new MimeMultipart();
-//
-//            multipart.addBodyPart(messageBodyPart);
-//
-//            messageBodyPart = new MimeBodyPart();
-//
-//            DataSource source = new FileDataSource(filePath);
-//
-//            messageBodyPart.setDataHandler(new DataHandler(source));
-//
-//            messageBodyPart.setFileName(filePath);
-//
-//            multipart.addBodyPart(messageBodyPart);
-
-//            mm.setContent(multipart);
 
         } catch (MessagingException e) {
             e.printStackTrace();

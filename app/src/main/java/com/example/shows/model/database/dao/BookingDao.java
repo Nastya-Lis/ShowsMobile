@@ -29,8 +29,4 @@ public abstract class BookingDao extends CommonDao<Booking>{
     @Query("DELETE FROM booking")
     public abstract void deleteAllBookings();
 
-//    @Transaction
-//    public LiveData<List<Booking>> getBookingByUser(User user){
-//        return getBookingByUser(user.getId());
-//    }
 }

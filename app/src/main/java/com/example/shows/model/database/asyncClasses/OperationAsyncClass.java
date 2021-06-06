@@ -27,6 +27,7 @@ public class OperationAsyncClass<D extends CommonDao<E>, E extends CommonEntity>
     @Override
     protected final SQLiteException doInBackground(E... items) {
         try {
+            if(items[0]!=null)
             doInBackground.accept(dao, items[0]);
             return null;
         } catch (SQLiteException e) {

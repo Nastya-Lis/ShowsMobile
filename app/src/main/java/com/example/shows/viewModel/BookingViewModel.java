@@ -36,6 +36,11 @@ public class BookingViewModel extends AbstractCrudViewModel<Booking, BookingRepo
     public LiveData<User> userLiveData;
 
 
+    //обновление информации спектакля
+    public void updatePerformance(Performance performance){
+        performanceRepository.update(performance,null);
+    }
+
     public LiveData<Performance> getPerformanceData(Integer id){
         performanceLiveData =  performanceRepository.getPerformanceById(id);
         return performanceLiveData;
@@ -71,9 +76,6 @@ public class BookingViewModel extends AbstractCrudViewModel<Booking, BookingRepo
     }
 
     public void pushToServer(Booking booking){
-//        Integer amountToSend = booking.getAmount();
-//        Integer idUserToSend = booking.getUserId();
-//        Integer idPerformanceToSend = booking.getPerformanceId();
         bookingRepository.pushToServerBooking(booking);
     }
 

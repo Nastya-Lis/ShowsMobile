@@ -24,7 +24,6 @@ public abstract class GenersDao extends CommonDao<Geners>{
     @Query("SELECT * FROM gener LIMIT 1")
     public abstract LiveData<Geners> getFirst();
 
-
     @Query("DELETE FROM gener")
     public abstract void deleteAllGeners();
 }

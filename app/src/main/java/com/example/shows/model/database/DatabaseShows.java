@@ -16,6 +16,7 @@ import com.example.shows.model.database.dao.ActorDao;
 import com.example.shows.model.database.dao.ActorPerformanceDao;
 import com.example.shows.model.database.dao.BookingDao;
 import com.example.shows.model.database.dao.GenersDao;
+import com.example.shows.model.database.dao.MarkDao;
 import com.example.shows.model.database.dao.PerformanceDao;
 import com.example.shows.model.database.dao.ScenaristDao;
 import com.example.shows.model.database.dao.ScenaristPerformanceDao;
@@ -24,6 +25,7 @@ import com.example.shows.model.database.entity.Actor;
 import com.example.shows.model.database.entity.ActorPerformance;
 import com.example.shows.model.database.entity.Booking;
 import com.example.shows.model.database.entity.Geners;
+import com.example.shows.model.database.entity.Mark;
 import com.example.shows.model.database.entity.Performance;
 import com.example.shows.model.database.entity.Scenarist;
 import com.example.shows.model.database.entity.ScenaristPerformance;
@@ -32,7 +34,8 @@ import com.example.shows.model.database.entity.converter.ConverterDateType;
 import com.example.shows.model.layerAboveNetwork.service.PerformanceService;
 
 @Database(entities = {Actor.class, ActorPerformance.class, Booking.class, Geners.class,
-        Performance.class, Scenarist.class, ScenaristPerformance.class, User.class}, version = 9)
+        Performance.class, Scenarist.class, ScenaristPerformance.class, User.class,
+        Mark.class}, version = 12)
 @TypeConverters({ConverterDateType.class})
 public abstract class DatabaseShows extends RoomDatabase {
     public abstract ActorDao actorDao();
@@ -43,6 +46,7 @@ public abstract class DatabaseShows extends RoomDatabase {
     public abstract ScenaristDao scenaristDao();
     public abstract ScenaristPerformanceDao scenaristPerformanceDao();
     public abstract UserDao userDao();
+    public abstract MarkDao markDao();
 
 
     private static final String nameDB = "ShowsDb";
@@ -68,7 +72,6 @@ public abstract class DatabaseShows extends RoomDatabase {
         @Override
         public void onOpen (@NonNull SupportSQLiteDatabase db){
             super.onOpen(db);
-           // PerformanceService performanceService = new PerformanceService();
         }
     };
 

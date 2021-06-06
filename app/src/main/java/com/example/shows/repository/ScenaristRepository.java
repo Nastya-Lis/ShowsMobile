@@ -62,10 +62,6 @@ public class ScenaristRepository extends CommonRepository<Scenarist>{
 
                 ScenaristMapping mapper = Mappers.getMapper(ScenaristMapping.class);
                 List<Scenarist> scenarists = mapper.dtoesToEntities(response.body());
-                if(response.body().isEmpty()){
-                    Log.d("Padla pustaiaa","yeeep");
-                }
-                Log.d("apiPerform fuccc","yeeep");
                 ScenaristRepository repository = new ScenaristRepository(context);
                 ScenaristPerformanceRepository scenaristPerformanceRepository = new ScenaristPerformanceRepository(context);
 
@@ -74,7 +70,6 @@ public class ScenaristRepository extends CommonRepository<Scenarist>{
                     ScenaristPerformance scenaristPerformance = new ScenaristPerformance();
                     scenaristPerformance.setScenarist_id(scenarist.getId());
                     scenaristPerformance.setPerformance_id(performance.getId());
-                    //actorPerformanceSet.add(actorPerformance);
                     scenaristPerformanceRepository.insert(scenaristPerformance, null);
                 };
                     repository.insert(scenarist,null);
@@ -83,7 +78,7 @@ public class ScenaristRepository extends CommonRepository<Scenarist>{
 
             @Override
             public void onFailure(Call<List<ScenaristDto>> call, Throwable t) {
-                Log.d("apiPerform suckk","Something is going wrong"+t.getMessage() +t.getCause());
+                Log.d("scenarist repository","Something is going wrong "+t.getMessage() +t.getCause());
             }
         });
     }

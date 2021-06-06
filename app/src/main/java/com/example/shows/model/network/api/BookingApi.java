@@ -14,9 +14,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 
-//TODO: Add normal address
 public interface BookingApi {
-  //  @FormUrlEncoded
     @POST("/bookings/add")
     Call<String> pushOnServer(@Query("amount") Integer amount, @Query("userId") Integer userId, @Query("performanceId") Integer performanceId);
 }

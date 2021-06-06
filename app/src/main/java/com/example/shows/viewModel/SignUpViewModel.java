@@ -13,7 +13,6 @@ import com.example.shows.repository.UserRepository;
 
 public class SignUpViewModel extends AbstractCrudViewModel<User, UserRepository>{
 
-    //UserRepository userRepository;
     public MutableLiveData<Boolean> isSuccessToServer = new MutableLiveData<>();
 
     public SignUpViewModel(@NonNull Application application) {

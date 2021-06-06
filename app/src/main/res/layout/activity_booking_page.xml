@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textSize="17dp"
-            android:text="@{``+vmBook.bookingLiveData.amount, default = `1` }"
+            android:text="@{``+(vmBook.bookingLiveData.amount+1)}"
             />
 
         <Button
@@ -59,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="17dp"
-        android:text="@{``+vmBook.performanceLiveData.price}"
+        android:text="@{String.format(`%.2f`,vmBook.performanceLiveData.price)}"
         />
 
 

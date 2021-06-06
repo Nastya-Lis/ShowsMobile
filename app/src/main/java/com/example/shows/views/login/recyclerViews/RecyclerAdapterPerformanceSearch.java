@@ -18,12 +18,6 @@ public class RecyclerAdapterPerformanceSearch extends RecyclerView.Adapter<Recyc
     List<Performance> performanceList;
     List<Performance> performanceListCopy;
 
-  /*  public RecyclerAdapterPerformance(List<Performance> performanceList){
-        this.performanceList = performanceList;
-   //     performanceListCopy = new ArrayList<>(performanceList);
-    }
-*/
-
     public void setPerformanceList(List<Performance> performanceList) {
         this.performanceList = performanceList;
         notifyDataSetChanged();
@@ -44,12 +38,6 @@ public class RecyclerAdapterPerformanceSearch extends RecyclerView.Adapter<Recyc
     public interface OnPerformanceClickListener {
         void onPerformanceClick(Performance performance);
     }
-
-
-//    public interface OnPerformanceLongClickListener{
-//        boolean onPerformanceLongClick(Performance performance, View view);
-//    }
-
     public RecyclerAdapterPerformance.OnPerformanceClickListener onPerformanceClickListener;
     //   public OnPerformanceLongClickListener onPerformanceLongClickListener;
 
@@ -58,10 +46,6 @@ public class RecyclerAdapterPerformanceSearch extends RecyclerView.Adapter<Recyc
     public void setOnPerformanceClickListener(RecyclerAdapterPerformance.OnPerformanceClickListener onPerformanceClickListener){
         this.onPerformanceClickListener = onPerformanceClickListener;
     }
-
-//    public void setOnPerformanceLongClickListener(OnPerformanceLongClickListener onPerformanceLongClickListener){
-//        this.onPerformanceLongClickListener = onPerformanceLongClickListener;
-//    }
 
 
     @NonNull
@@ -85,11 +69,6 @@ public class RecyclerAdapterPerformanceSearch extends RecyclerView.Adapter<Recyc
         if(onPerformanceClickListener !=null){
             holder.itemView.setOnClickListener(view -> onPerformanceClickListener.onPerformanceClick(performance));
         }
-       /* if(onPerformanceLongClickListener != null){
-            holder.itemView.setOnLongClickListener(view ->
-                    onPerformanceLongClickListener.onPerformanceLongClick(performance,view));
-        }*/
-
     }
 
     @Override

@@ -18,15 +18,18 @@ import com.example.shows.model.database.asyncClasses.ActorPerformForSearch;
 import com.example.shows.model.database.asyncClasses.ActorPerformanceAsyncClass;
 import com.example.shows.model.database.asyncClasses.ScenaristForSearch;
 import com.example.shows.model.database.asyncClasses.ScenaristPerformForSearch;
-import com.example.shows.model.database.dao.ActorDao_Impl;
+
+import com.example.shows.model.database.asyncClasses.UserGetAsyncTask;
 import com.example.shows.model.database.entity.Actor;
 import com.example.shows.model.database.entity.Geners;
+import com.example.shows.model.database.entity.Mark;
 import com.example.shows.model.database.entity.Performance;
 import com.example.shows.model.database.entity.Scenarist;
 import com.example.shows.model.database.entity.User;
 import com.example.shows.model.layerAboveNetwork.service.PerformanceService;
 import com.example.shows.repository.ActorRepository;
 import com.example.shows.repository.GenreRepository;
+import com.example.shows.repository.MarkRepository;
 import com.example.shows.repository.PerformanceRepository;
 import com.example.shows.repository.ScenaristRepository;
 import com.example.shows.repository.UserRepository;
@@ -38,27 +41,21 @@ import java.util.concurrent.ExecutionException;
 
 import lombok.SneakyThrows;
 
-//обращение к репозиторию за данными, которые нужно отобразить в активити
-
-//создать ссылку на репозиторий
 public class PerformanceViewModel extends AbstractCrudViewModel<Performance,PerformanceRepository> {
-
-    //PerformanceRepository performanceRepository;
 
     GenreRepository genreRepository;
     ActorRepository actorRepository;
     ScenaristRepository scenaristRepository;
     UserRepository userRepository;
-
+    MarkRepository markRepository;
 
     LiveData<Actor> actorLiveData;
-
-
     public LiveData<Geners> genersLiveData;
     public LiveData<List<Actor>> actorsListLiveData;
     public LiveData<List<Performance>> listLiveDataPerformancesSearch;
     public LiveData<List<Scenarist>> scenaristListLiveData;
     public LiveData<User> userLiveData;
+    public LiveData<Mark> markLiveData;
 
 
     public PerformanceViewModel(@NonNull Application application) {
@@ -68,21 +65,48 @@ public class PerformanceViewModel extends AbstractCrudViewModel<Performance,Perf
         actorRepository = new ActorRepository(application);
         scenaristRepository = new ScenaristRepository(application);
         userRepository = new UserRepository(application);
-      //  genersLiveData = genreRepository.getFirstGenre();
+        markRepository = new MarkRepository(application);
         listLiveData = repository.getAllPerformances();
-
-
         actorLiveData = new MutableLiveData<>();
-
         listLiveDataPerformancesSearch = repository.getAllPerformances();
         justOneLiveDataElement = repository.getPerformanceFirst();
     }
 
 
+    //асинк таск получение юзера
+    public User getCurrentUserAsync(){
+        User user = null;
+        try {
+            UserGetAsyncTask userGetAsyncTask = new UserGetAsyncTask(userRepository.userDao);
+            user = userGetAsyncTask.execute().get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    //для выставления оценки
+    public LiveData<Mark> getMarkLiveData(Integer performanceId, Integer userId){
+        markLiveData = markRepository.getMarkLiveData(performanceId, userId);
+        return markLiveData;
+    }
+
+    //когда появляется интернет соединение, отправляются данные на сервер
+    public void setToServerRating(Boolean likeOrNot, Integer performanceId){
+        markRepository.sendToServer(likeOrNot,performanceId);
+    }
+
+    public void setMarkLiveData(Integer performanceId, Integer userId,Boolean likeOrNot){
+        markRepository.setMarkToDb(performanceId,userId, likeOrNot);
+        //repository.update();
+    }
+
     public List<Performance> getPerformancesByCriteriaSearch(String criteria, String name){
         List<Performance> performancesListSearch = new ArrayList<>();
         switch (criteria){
-            case "Actor":
+            case "Актер":
                 try {
                     ActorForSearch actorForSearch = new ActorForSearch(actorRepository.actorDao);
                     Actor actor = actorForSearch.execute(name).get();
@@ -96,7 +120,7 @@ public class PerformanceViewModel extends AbstractCrudViewModel<Performance,Perf
                 }
 
                 break;
-            case "Scenarist":
+            case "Сценарист":
                 try {
                     ScenaristForSearch scenaristForSearch= new ScenaristForSearch(scenaristRepository.scenaristDao);
                     Scenarist scenarist = scenaristForSearch.execute(name).get();
@@ -110,24 +134,11 @@ public class PerformanceViewModel extends AbstractCrudViewModel<Performance,Perf
                 }
 
                 break;
-            case "Gener":
-                break;
         }
         return performancesListSearch;
     }
 
     public LiveData<List<Performance>> returnCurrentLiveDataPerfSearch(){
-        return listLiveDataPerformancesSearch;
-    }
-
-    public LiveData<List<Performance>> chaaaaange(){
-       /* if(actor != null)
-        listLiveDataPerformancesSearch = repository.getPerformancesByActorId(actor.getId());*/
-        return listLiveDataPerformancesSearch;
-    }
-
-    public LiveData<List<Performance>> getPerformancesByIdActorSearch(Integer id){
-        listLiveDataPerformancesSearch = repository.getPerformancesByActorId(id);
         return listLiveDataPerformancesSearch;
     }
 
@@ -173,28 +184,8 @@ public class PerformanceViewModel extends AbstractCrudViewModel<Performance,Perf
         actorRepository.getAllActorsFromApi(context);
         scenaristRepository.getAllScenaristFromApi(context);
         repository.getAllPerformancesFromApi(getApplication());
-//       Thread thread = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//            }
-//        });
-//       thread.start();
-//     //  thread.stop();
-//       new Thread(new Runnable() {
-//           @Override
-//           public void run() {
-//               repository.getAllPerformancesFromApi(context);
-//           }
-//       }).start();
-
     }
 
-  /*  public LiveData<List<Performance>> getPerformancesFromRest(PerformanceService performanceService){
-        List<Performance> performances = performanceService.getAllPerformancesFromApi();
-        listLiveData = new MutableLiveData(performances);
-        return listLiveData;
-    }*/
 
     //адаптер для представления списка актеров в виде стринга
     @BindingAdapter("android:text")

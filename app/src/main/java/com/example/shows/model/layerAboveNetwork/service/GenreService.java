@@ -25,8 +25,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-//не используется
-
 public class GenreService {
     private final DatabaseShows databaseShows;
     private final GenreApi genreApi = NetworkSmth.getInstance().genreApi();
@@ -36,16 +34,6 @@ public class GenreService {
     }
 
 
-  /*  public void takeDataFromApi(){
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                // All your networking logic
-                // should be here
-            }
-        });
-    }*/
-
     public void getAllGenresFromApi(){
         genreApi.getAllGenres().enqueue(new Callback<List<GenersDto>>() {
 
@@ -54,38 +42,15 @@ public class GenreService {
                 GenerMapping mapper = Mappers.getMapper(GenerMapping.class);
                 List<Geners> geners = mapper.dtoesToEntities(response.body());
                 if(response.body().isEmpty()){
-                    Log.d("Padla pustaiaa","yeeep");
+                    Log.d("genreservice","success");
                 }
-                Log.d("apiPerform fuccc","yeeep");
-                //   addToDb(performances);
-
-                if(geners.size()!=0){
-                    for (Geners gener: geners) {
-
-                        Log.d(String.valueOf("ggg"),"genres:"
-                                + gener.getNameType()+ " " +gener.getId());
-
-                    }
-                }
-
             }
 
             @Override
             public void onFailure(Call<List<GenersDto>> call, Throwable t) {
-                Log.d("apiPerform suckk","Something is going wrong"+t.getMessage() +t.getCause());
+                Log.d("genereservice","Something is going wrong"+t.getMessage() +t.getCause());
             }
         });
-    }
-
-    void addToDb(List<Geners> genersList){
-        for (Geners gener: genersList) {
-            databaseShows.genersDao().insert(gener);
-        }
-    }
-
-    public LiveData<List<Geners>> getGenresFromDb(){
-        getAllGenresFromApi();
-        return databaseShows.genersDao().getAll();
     }
 
 }

@@ -66,10 +66,6 @@ public class GenreRepository extends CommonRepository<Geners> {
 
                 GenerMapping mapper = Mappers.getMapper(GenerMapping.class);
                 List<Geners> geners = mapper.dtoesToEntities(response.body());
-                if(response.body().isEmpty()){
-                    Log.d("Padla pustaiaa","yeeep");
-                }
-                Log.d("apiPerform fuccc","yeeep");
                 GenreRepository repository = new GenreRepository(context);
 
                 for (Geners gener: geners) {
@@ -79,7 +75,7 @@ public class GenreRepository extends CommonRepository<Geners> {
 
             @Override
             public void onFailure(Call<List<GenersDto>> call, Throwable t) {
-                Log.d("apiPerform suckk","Something is going wrong"+t.getMessage() +t.getCause());
+                Log.d("genre repository","Something is going wrong"+t.getMessage() +t.getCause());
             }
         });
     }

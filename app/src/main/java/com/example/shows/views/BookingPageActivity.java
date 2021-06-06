@@ -44,9 +44,9 @@ public class BookingPageActivity extends AppCompatActivity {
         user = getCurrentUserFromBundle();
 
         bookingPageBinding = DataBindingUtil.setContentView(this, R.layout.activity_booking_page);
-        //ВНИМАНИЕ!!! ОЧЕНЬ ВАЖНАЯ СТРОКА!!!!!!!!!!
+
         bookingPageBinding.setLifecycleOwner(this);
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
         bookingViewModel = ViewModelProviders.of(this).get(BookingViewModel.class);
         bookingPageBinding.setVmBook(bookingViewModel);
 
@@ -57,72 +57,66 @@ public class BookingPageActivity extends AppCompatActivity {
         bookingViewModel.getPerformanceData(performance.getId()).observe(this, new Observer<Performance>() {
             @Override
             public void onChanged(Performance performance) {
-               // bookingViewModel.performanceMutableLiveData.postValue(performance);
             }
         });
 
-
-
         bookingViewModel.getCurrentUserFromDb();
         bookingViewModel.getPerformanceData(performance.getId());
-
-
-        //bookingViewModel.getUserById(1);
-       // user = bookingViewModel.getUserById(1).getValue();
     }
 
 
     public void  increaseAmount(View view){
-        if(Integer.valueOf(bookingPageBinding.numberOfTicket.getText().toString()) <= performance.getAmountTickets()) {
+        if(Integer.valueOf(bookingPageBinding.numberOfTicket.getText().toString()) < performance.getAmountTickets()) {
             bookingPageBinding.numberOfTicket.setText(String.valueOf(Integer.valueOf(bookingPageBinding.numberOfTicket.getText().toString()) + 1));
-            bookingPageBinding.totalSum.setText(String.valueOf(Double.parseDouble(bookingPageBinding.totalSum.getText().toString())
+            bookingPageBinding.totalSum.setText(String.format("%.2f",Double.parseDouble(bookingPageBinding.totalSum.getText().toString())
                     + performance.getPrice()));
         }
     }
 
     public void decreaseAmount(View view){
         if(Integer.valueOf(bookingPageBinding.numberOfTicket.getText().toString()) > 0) {
-            bookingPageBinding.numberOfTicket.setText(String.valueOf(Integer.valueOf(bookingPageBinding.numberOfTicket.getText().toString()) - 1));
-            bookingPageBinding.totalSum.setText(String.valueOf(Double.parseDouble(bookingPageBinding.totalSum.getText().toString())
-                    - performance.getPrice()));
+
+            if(Integer.valueOf(bookingPageBinding.numberOfTicket.getText().toString()) == 0)
+                bookingPageBinding.totalSum.setText(0);
+
+            if(Integer.valueOf(bookingPageBinding.numberOfTicket.getText().toString()) != 0) {
+                bookingPageBinding.numberOfTicket.setText(String.valueOf(Integer.valueOf(bookingPageBinding.numberOfTicket.getText().toString()) - 1));
+                bookingPageBinding.totalSum.setText(String.format("%.2f",Double.parseDouble(bookingPageBinding.totalSum.getText().toString())
+                        - performance.getPrice()));
+            }
+
         }
     }
 
     public void doBooking(View view){
-        Booking booking = new Booking();
-      //  booking.setPerformanceId(performance.getId());
-       // user = bookingViewModel.userLiveData.getValue();
-
         Integer amount = Integer.valueOf(bookingPageBinding.numberOfTicket.getText().toString());
-       /* booking.setPerformance(performance);
-        booking.setPerformanceId(performance.getId());
-        booking.setAmount(amount);
-        booking.setUser(getCurrentUserFromBundle());
-        booking.setUserId(getCurrentUserFromBundle().getId());
 
-        BookingMapping mapper = Mappers.getMapper(BookingMapping.class);
-        BookingDto bookingDto = mapper.entityToDto(booking);*/
-
-        Booking bookingToSend = new Booking();
-        bookingToSend.setAmount(amount);
-        bookingToSend.setPerformanceId(getPerformanceFromBundle().getId());
-        bookingToSend.setUserId(getCurrentUserFromBundle().getId());
-        bookingToSend.setUser(getCurrentUserFromBundle());
-        bookingToSend.setPerformance(getPerformanceFromBundle());
+        if(amount!=0) {
+            Booking bookingToSend = new Booking();
+            bookingToSend.setAmount(amount);
+            bookingToSend.setPerformanceId(getPerformanceFromBundle().getId());
+            bookingToSend.setUserId(getCurrentUserFromBundle().getId());
+            bookingToSend.setUser(getCurrentUserFromBundle());
+            bookingToSend.setPerformance(getPerformanceFromBundle());
 
 
-        bookingViewModel.bookingLiveData = new MutableLiveData<>(bookingToSend);
-        bookingViewModel.insertBookingLiveData();
-        bookingViewModel.pushToServer(bookingToSend);
-        if(Utils.isOnline(this) == true){
+            bookingViewModel.bookingLiveData = new MutableLiveData<>(bookingToSend);
+            bookingViewModel.insertBookingLiveData();
+            bookingViewModel.pushToServer(bookingToSend);
 
-            JavaMailApi javaMailApi = new JavaMailApi(getCurrentUserFromBundle().getEmail(),
-                    "Бронирование билетов", getPerformanceFromBundle());
-            javaMailApi.execute();
-            Toast.makeText(this,"Success booking",Toast.LENGTH_SHORT).show();
-            /*Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();*/
+            performance.setAmountTickets(performance.getAmountTickets() - amount);
+            bookingViewModel.updatePerformance(performance);
+
+            if (Utils.isOnline(this) == true) {
+
+                JavaMailApi javaMailApi = new JavaMailApi(getCurrentUserFromBundle().getEmail(),
+                        "Бронирование билетов", getPerformanceFromBundle(), bookingToSend);
+                javaMailApi.execute();
+                Toast.makeText(this, "Success booking", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
     }
 

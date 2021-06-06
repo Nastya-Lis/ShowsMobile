@@ -14,7 +14,7 @@ import com.example.shows.model.database.entity.Performance;
 import java.util.List;
 
 @Dao
-public abstract class ActorPerformanceDao{
+public abstract class ActorPerformanceDao {
     @Insert
     public abstract void insert(ActorPerformance actorPerformance);
 
@@ -30,8 +30,9 @@ public abstract class ActorPerformanceDao{
     @Query("SELECT * FROM performance Where id In (SELECT performance_id FROM actor_performance Where actor_id =:actorId)")
     public abstract LiveData<List<Performance>> getPerformancesByActor(int actorId);
 
-
     @Query("SELECT * FROM performance Where id In (SELECT performance_id FROM actor_performance Where actor_id =:actorId)")
     public abstract List<Performance> getPerformancesByActorNotLiveData(int actorId);
+
+
 
 }

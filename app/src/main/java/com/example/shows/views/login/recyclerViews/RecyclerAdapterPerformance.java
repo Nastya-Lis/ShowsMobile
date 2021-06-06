@@ -17,13 +17,6 @@ import java.util.List;
 public class RecyclerAdapterPerformance extends RecyclerView.Adapter<RecyclerAdapterPerformance.RecyclerPerform> {
 
     List<Performance> performanceList;
-    List<Performance> performanceListCopy;
-
-  /*  public RecyclerAdapterPerformance(List<Performance> performanceList){
-        this.performanceList = performanceList;
-   //     performanceListCopy = new ArrayList<>(performanceList);
-    }
-*/
 
     public void setPerformanceList(List<Performance> performanceList) {
         this.performanceList = performanceList;
@@ -46,24 +39,11 @@ public class RecyclerAdapterPerformance extends RecyclerView.Adapter<RecyclerAda
         void onPerformanceClick(Performance performance);
     }
 
-
-//    public interface OnPerformanceLongClickListener{
-//        boolean onPerformanceLongClick(Performance performance, View view);
-//    }
-
     public OnPerformanceClickListener onPerformanceClickListener;
- //   public OnPerformanceLongClickListener onPerformanceLongClickListener;
-
-
 
     public void setOnPerformanceClickListener(OnPerformanceClickListener onPerformanceClickListener){
         this.onPerformanceClickListener = onPerformanceClickListener;
     }
-
-//    public void setOnPerformanceLongClickListener(OnPerformanceLongClickListener onPerformanceLongClickListener){
-//        this.onPerformanceLongClickListener = onPerformanceLongClickListener;
-//    }
-
 
     @NonNull
     @Override
@@ -86,10 +66,6 @@ public class RecyclerAdapterPerformance extends RecyclerView.Adapter<RecyclerAda
         if(onPerformanceClickListener !=null){
             holder.itemView.setOnClickListener(view -> onPerformanceClickListener.onPerformanceClick(performance));
         }
-       /* if(onPerformanceLongClickListener != null){
-            holder.itemView.setOnLongClickListener(view ->
-                    onPerformanceLongClickListener.onPerformanceLongClick(performance,view));
-        }*/
 
     }
 

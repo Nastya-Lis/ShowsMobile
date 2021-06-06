@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 
@@ -16,11 +17,14 @@ import android.view.View;
 import com.example.shows.MainActivity;
 import com.example.shows.R;
 import com.example.shows.databinding.ActivityFullyPerformBinding;
+import com.example.shows.model.database.asyncClasses.PerformanceGetByIdAsync;
 import com.example.shows.model.database.entity.Actor;
 import com.example.shows.model.database.entity.Geners;
+import com.example.shows.model.database.entity.Mark;
 import com.example.shows.model.database.entity.Performance;
 import com.example.shows.model.database.entity.Scenarist;
 import com.example.shows.model.database.entity.User;
+import com.example.shows.utils.Utils;
 import com.example.shows.viewModel.PerformanceViewModel;
 import com.example.shows.views.login.recyclerViews.RecyclerAdapterPerformance;
 
@@ -48,12 +52,6 @@ public class FullyPerformActivity extends AppCompatActivity {
         performanceViewModel = ViewModelProviders.of(this).get(PerformanceViewModel.class);
         fullyPerformBinding.setVm(performanceViewModel);
 
-      /*  performanceViewModel.getLiveDataById().observe(this, new Observer<Performance>() {
-            @Override
-            public void onChanged(Performance performance) {
-
-            }
-        });*/
 
        performanceViewModel.getGenreById(sending.getGenreId()).observe(this, new Observer<Geners>() {
             @Override
@@ -76,17 +74,25 @@ public class FullyPerformActivity extends AppCompatActivity {
            }
        });
 
-      /*  performanceViewModel.getPerformanceByIdFromDb(sending.getId()).observe(this, new Observer<Performance>() {
+        performanceViewModel.getMarkLiveData(sending.getId(),getCurrentUserFromBundle().getId()).observe(this, new Observer<Mark>() {
             @Override
-            public void onChanged(Performance performance) {
-
+            public void onChanged(Mark mark) {
+                if (mark != null) {
+                    if (mark.isLikeOrNot()) {
+                        fullyPerformBinding.checkBoxLike.setChecked(true);
+                    } else
+                        fullyPerformBinding.checkBoxLike.setChecked(false);
+                }
             }
-        });*/
+        });
+
+
 
         performanceViewModel.getPerformanceByIdFromDb(sending.getId());
         performanceViewModel.getGenreById(sending.getGenreId());
         performanceViewModel.getActorsByIdPerform(sending.getId());
         performanceViewModel.getScenaristsByIdPerform(sending.getId());
+        performanceViewModel.getMarkLiveData(sending.getId(), getCurrentUserFromBundle().getId());
     }
 
 
@@ -109,15 +115,21 @@ public class FullyPerformActivity extends AppCompatActivity {
         return user;
     }
 
-
-  /*  public void reloadPage(View view) {
-        performanceViewModel.getPerformanceByIdFromDb(getDataCurrentPerformance().getId()).observe(this, new Observer<Performance>() {
-            @Override
-            public void onChanged(Performance performance) {
-                performanceCostil = performance;
-                fullyPerformBinding.description.setText(performance.getDescription());
+    public void saveLikeState(View view){
+        if(fullyPerformBinding.checkBoxLike.isChecked()){
+            if(Utils.isOnline(this)){
+                performanceViewModel.setToServerRating( fullyPerformBinding.checkBoxLike.isChecked(),getDataCurrentPerformance().getId());
+                //Integer[]  massiv = new Integer[]{getDataCurrentPerformance(),};
             }
-        });
+            performanceViewModel.setMarkLiveData(getDataCurrentPerformance().getId(),getCurrentUserFromBundle().getId(),
+                    fullyPerformBinding.checkBoxLike.isChecked());
+        }
+        else{
+            if(Utils.isOnline(this)){
+                performanceViewModel.setToServerRating( false,getDataCurrentPerformance().getId());
+            }
+            performanceViewModel.setMarkLiveData(getDataCurrentPerformance().getId(),getCurrentUserFromBundle().getId(),false);
+        }
+    }
 
-    }*/
 }

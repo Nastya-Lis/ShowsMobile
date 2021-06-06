@@ -35,7 +35,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class UserRepository extends CommonRepository<User>{
-    UserDao userDao;
+    public UserDao userDao;
     LiveData<User> userLiveData;
 
     public UserRepository(Context context) {
@@ -48,12 +48,16 @@ public class UserRepository extends CommonRepository<User>{
         return userLiveData;
     }
 
-
-
     public LiveData<User> getUserById(Integer id){
         userLiveData = userDao.getById(id);
         return userLiveData;
     }
+
+    public LiveData<User> getByPasswordAndEmail(String email, String password){
+        userLiveData = userDao.getByPasswordAndEmail(email,password);
+        return userLiveData;
+    }
+
 
     public void login(String email, String password, Context context){
         NetworkSmth networkSmth = new NetworkSmth();

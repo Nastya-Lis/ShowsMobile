@@ -1,11 +1,5 @@
 package com.example.shows.repository;
 
-
-
-//managing resources
-//from what source(retrofit or db take data)
-//when wifi off or on
-
 import android.content.Context;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Path;
@@ -21,10 +15,15 @@ import com.example.shows.model.database.asyncClasses.PerformanceAsyncClass;
 import com.example.shows.model.database.asyncClasses.QueryAsyncClass;
 import com.example.shows.model.database.asyncClasses.QueryForCollectionAsyncClass;
 import com.example.shows.model.database.dao.ActorDao;
+
 import com.example.shows.model.database.dao.ActorDao_Impl;
 import com.example.shows.model.database.dao.ActorPerformanceDao;
+
+
 import com.example.shows.model.database.dao.ActorPerformanceDao_Impl;
+import com.example.shows.model.database.dao.MarkDao;
 import com.example.shows.model.database.dao.PerformanceDao;
+
 import com.example.shows.model.database.dao.PerformanceDao_Impl;
 import com.example.shows.model.database.entity.Actor;
 import com.example.shows.model.database.entity.Performance;
@@ -44,7 +43,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-//TODO change in dao returning value from usual list to livedata
 public class PerformanceRepository extends CommonRepository<Performance>{
 
     private PerformanceDao performanceDao;
@@ -62,28 +60,16 @@ public class PerformanceRepository extends CommonRepository<Performance>{
     private boolean isLastDefault = true;
 
 
-    private LiveData<List<Performance>> listPerformanceForApiLiveData;
-
-  /*  public Actor getActorByName(){
-
-    }*/
-
     //спектакли по имени актера
     public LiveData<List<Performance>> getPerformancesByActorId(Integer idActor){
-     //   LiveData<Optional<Actor>> actor = actorDao.findActorByName(name);
         performancesList = actorPerformanceDao.getPerformancesByActor(idActor);
         return performancesList;
     }
 
-//    public LiveData<Actor> getActorByName(String name){
-//        actorLiveData = actorDao.findActorByName(name);
-//        return actorLiveData;
-//    }
-
     public PerformanceRepository(Context context) {
         super(context);
-        performanceDao = new PerformanceDao_Impl(database);
-        actorDao = new ActorDao_Impl(database);
+       performanceDao = new PerformanceDao_Impl(database);
+       actorDao = new ActorDao_Impl(database);
         actorPerformanceDao = new ActorPerformanceDao_Impl(database);
         performancesList = new MutableLiveData<>();
         actorLiveData = new MutableLiveData<>();
@@ -105,18 +91,12 @@ public class PerformanceRepository extends CommonRepository<Performance>{
     }
 
     public LiveData<List<Performance>> getAllPerformances(){
-     /*   new QueryForCollectionAsyncClass<Performance,PerformanceDao>(performancesList,
-                () -> performanceDao.getAll()).execute();*/
         performancesList = performanceDao.getAll();
-      //  isLastDefault = false;
         return performancesList;
     }
 
     public LiveData<Performance> getPerformanceById(Integer id){
-     /*   new QueryForCollectionAsyncClass<Performance,PerformanceDao>(performancesList,
-                () -> performanceDao.getAll()).execute();*/
         performance = performanceDao.getById(id);
-        //  isLastDefault = false;
         return performance;
     }
 
@@ -125,11 +105,6 @@ public class PerformanceRepository extends CommonRepository<Performance>{
 
         NetworkSmth networkSmth = new NetworkSmth();
         PerformanceApi performanceApi = networkSmth.performanceApi();
-        // List<PerformanceDto> performanceList = performanceApi.getAllPerformances().execute().body();
-
-        //PerformanceMapping mapper = Mappers.getMapper(PerformanceMapping.class);
-        //List<Performance> performances = new ArrayList<>();
-
         performanceApi.getAllPerformances().enqueue(new Callback<List<PerformanceDto>>() {
 
             @Override
@@ -137,19 +112,7 @@ public class PerformanceRepository extends CommonRepository<Performance>{
 
                 PerformanceMapping mapper = Mappers.getMapper(PerformanceMapping.class);
                 List<Performance> performances = mapper.dtoesToEntities(response.body());
-                if(response.body().isEmpty()){
-                    Log.d("Padla pustaiaa","yeeep");
-                }
-                Log.d("apiPerform fuccc","yeeep");
 
-
-          /*      listPerformanceForApiLiveData.observeForever(new Observer<List<Performance>>() {
-                    @Override
-                    public void onChanged(List<Performance> performanceList) {
-
-                    }
-                });
-                */
                 PerformanceRepository repository = new PerformanceRepository(context);
 
                 for (Performance performance: performances) {
@@ -157,54 +120,17 @@ public class PerformanceRepository extends CommonRepository<Performance>{
                     repository.insert(performance,null);
                 }
 
-                //  insertPerformAsyncTask .execute(performances);
-                //   PerformanceRepository repository = new PerformanceRepository(context);
-
-                   /* AsyncTask.execute(
-                            new Runnable() {
-                                @Override
-                                public void run() {
-                                    Optional<Performance> opt = repository.checkIsExistFirstPerform();
-                                    if(opt != null){
-                                        repository.deleteAllPerformance();
-                                    }
-                                    for (Performance performance:performances) {
-                                        repository.insert(performance,null);
-                                    }
-                                }
-                            }
-                    );*/
-
-
-                // Performance performance = mapper.dtoToEntity(response.body().get(0));
-//                Log.d("performance","wooot:"
-//                        + performance.getDescription() + performance.getId());
-
-//                 if(performances.size()!=0){
-//                    for (Performance performance: performances) {
-//                       Log.d(String.valueOf("pipi"),"performances:"
-//                                + performance.getName()+ " " + performance.getAmountTickets() + " "
-//                                +performance.getId());
-//                    }
-//                }
-                //    addToDb(performances);
-
             }
 
             @Override
             public void onFailure(Call<List<PerformanceDto>> call, Throwable t) {
-                Log.d("apiPerform suckk","Something is going wrong"+t.getMessage() +t.getCause());
+                Log.d("performance repository","Something is going wrong "+t.getMessage() +t.getCause());
             }
         });
 
 
     }
 
-
-  /*  public MutableLiveData<Performance> getPerformanceMutableById(Integer id){
-        performanceMutable = performanceDao.getByIdMutable(id);
-        return performanceMutable;
-    }*/
 
     @Override
     public void insert(Performance item, Consumer<SQLiteException> onError) {

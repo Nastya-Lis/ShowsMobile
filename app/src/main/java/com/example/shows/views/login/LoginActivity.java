@@ -17,6 +17,7 @@ import com.example.shows.databinding.ActivityLoginBinding;
 import com.example.shows.model.database.DatabaseShows;
 import com.example.shows.model.database.entity.Performance;
 import com.example.shows.model.database.entity.User;
+import com.example.shows.utils.Utils;
 import com.example.shows.viewModel.LoginViewModel;
 import com.example.shows.viewModel.PerformanceViewModel;
 import com.example.shows.views.FullyPerformActivity;
@@ -28,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     LoginViewModel loginViewModel;
     ActivityLoginBinding loginBinding;
     boolean isSuccessAdding = false;
+    int countClick=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,60 +40,68 @@ public class LoginActivity extends AppCompatActivity {
         loginBinding.setLifecycleOwner(this);
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
 
+        DatabaseShows databaseShows = DatabaseShows.getInstance(this);
 
-        //из-за этого лагает экран активности
-    /*    loginViewModel.getCurrentUser().observe(this, new Observer<User>() {
-            @Override
-            public void onChanged(User user) {
-              //  if(user!=null && user.getId() != 0){
-                  //  goToMainActivity();
-                    isSuccessAdding = true;
+        AsyncTask.execute(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        //databaseShows.genersDao().insert(geners);
+                        //databaseShows.genersDao().deleteAllGeners();
+                        //databaseShows.scenaristDao().deleteAllScenarist();
+                        //databaseShows.actorDao().deleteAllActors();
+                        databaseShows.markDao().deleteAllMarks();
+                        databaseShows.bookingDao().deleteAllBookings();
+                        databaseShows.userDao().deleteAllUsers();
+                        // databaseShows.genersDao().deleteAllGeners();
 
-            }
-        });*/
-
+                    }
+                }
+        );
         loginViewModel.getCurrentUser().observeForever(new Observer<User>() {
             @Override
             public void onChanged(User user) {
-                if(user!=null && user.getId()!=0){
+                if( Utils.isOnline(getApplicationContext()) && user!=null && user.getId()!=0){
                     isSuccessAdding = true;
                 }
             }
         });
 
         loginViewModel.getCurrentUser();
- /*       DatabaseShows databaseShows = DatabaseShows.getInstance(this);
 
-       AsyncTask.execute(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                       //databaseShows.genersDao().insert(geners);
-                        //databaseShows.genersDao().deleteAllGeners();
-                        //databaseShows.scenaristDao().deleteAllScenarist();
-                        //databaseShows.actorDao().deleteAllActors();
-                        databaseShows.userDao().deleteAllUsers();
-                       // databaseShows.genersDao().deleteAllGeners();
-
-                    }
-                }
-        );
-*/
     }
 
     public void loginFunc(View view) {
         if(loginBinding.etEmail.getText()!=null && loginBinding.etPassword.getText()!=null
-                && loginBinding.etEmail.getText().toString() != ""
-                && loginBinding.etPassword.getText().toString() != ""
-        ){
-            loginViewModel.loginFunc(loginBinding.etEmail.getText().toString(), loginBinding.etPassword.getText().toString());
-            if(isSuccessAdding == true){
-          //  User user = loginViewModel.getCurrentUser().getValue();
-            Intent intent = new Intent(this, MainActivity.class);
-            //intent.putExtra(User.class.getSimpleName(), user);
-            startActivity(intent);
-            finish();
+                && loginBinding.etEmail.getText().toString() != " "
+                && loginBinding.etPassword.getText().toString() != " "
+                && loginBinding.etEmail.getText().toString().contains("@")
+        ) {
+
+          /*  if(countClick > 0) {
+                if (loginViewModel.getCurrentUser() != null) {
+                    Intent intent = new Intent(this, MainActivity.class);
+                    //intent.putExtra(User.class.getSimpleName(), user);
+                    startActivity(intent);
+                    finish();
+                }
+            }*/
+           // if(countClick == 0) {
+            if(loginViewModel.getCurrentUserAsync() == null) {
+                loginViewModel.loginFunc(loginBinding.etEmail.getText().toString(), loginBinding.etPassword.getText().toString());
             }
+            else{
+              //  if (isSuccessAdding == true) {
+                    //  User user = loginViewModel.getCurrentUser().getValue();
+                  //  countClick++;
+                    Intent intent = new Intent(this, MainActivity.class);
+                    //intent.putExtra(User.class.getSimpleName(), user);
+                    startActivity(intent);
+                    finish();
+            }
+             //   }
+          //  }
+
         }
     }
 

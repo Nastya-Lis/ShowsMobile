@@ -23,32 +23,11 @@ import retrofit2.http.Query;
 
 public interface UserApi {
 
- /*   @FormUrlEncoded
-    @POST("/login")
-    Call<UserDto> login(@Field("username") String email, @Field("password") String password);
-*/
-
-   // @FormUrlEncoded
     @GET("/login")
     Call<UserDto> login(@Query("username") String email, @Query("password") String password);
 
-   /* @FormUrlEncoded
-    @POST("login")
-    Call<UserDto> login(@Field("email") String email,
-                        @Field("password") String password);*/
-
-
     @POST("registration")
     Call<ResponseBody> registration(@Body UserDto dto);
-
-    @GET("logout")
-    Call<ResponseBody> logout();
-
-    @GET("user")
-    Call<UserDto> currentUser();
-
-   /* @GET("")
-    Call<UserDto> getUser();*/
 
     @GET("user/booking/{userId}")
     Call<List<BookingDto>> getFromApiBookingCurrentUser(@Path("userId") Integer userId);

@@ -23,9 +23,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-//не используется
-
 public class ActorService {
 
     private final DatabaseShows databaseShows;
@@ -36,16 +33,6 @@ public class ActorService {
     }
 
 
-  /*  public void takeDataFromApi(){
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                // All your networking logic
-                // should be here
-            }
-        });
-    }*/
-
     public void getAllActorsFromApi(){
         actorApi.getAllActors().enqueue(new Callback<List<ActorDto>>() {
 
@@ -54,38 +41,15 @@ public class ActorService {
                 ActorMapping mapper = Mappers.getMapper(ActorMapping.class);
                 List<Actor> actors = mapper.dtoesToEntities(response.body());
                 if(response.body().isEmpty()){
-                    Log.d("Padla pustaiaa","yeeep");
+                    Log.d("actorservice","success");
                 }
-                Log.d("apiPerform fuccc","yeeep");
-                //   addToDb(performances);
-
-                if(actors.size()!=0){
-                    for (Actor actor: actors) {
-
-                        Log.d(String.valueOf("iii"),"actors:"
-                                + actor.getName()+ " " +actor.getId());
-
-                    }
-                }
-
             }
 
             @Override
             public void onFailure(Call<List<ActorDto>> call, Throwable t) {
-                Log.d("apiPerform suckk","Something is going wrong"+t.getMessage() +t.getCause());
+                Log.d("actorservice","Something is going wrong "+t.getMessage() +t.getCause());
             }
         });
-    }
-
-    void addToDb(List<Actor> actorList){
-        for (Actor actor: actorList) {
-            databaseShows.actorDao().insert(actor);
-        }
-    }
-
-    public LiveData<List<Actor>> getPerformancesFromDb(){
-        getAllActorsFromApi();
-        return databaseShows.actorDao().getAll();
     }
 
 }

@@ -39,9 +39,6 @@ public class Booking extends CommonEntity{
     }
 
     public void setUserId(int userId) {
-       /* if(user!=null)
-            this.userId = user.getId();
-        else*/
         this.userId = userId;
     }
 
@@ -50,9 +47,6 @@ public class Booking extends CommonEntity{
     }
 
     public void setPerformanceId(int performanceId) {
-      /*  if(performance!=null)
-            this.performanceId = performance.getId();
-        else*/
         this.performanceId = performanceId;
     }
 
@@ -77,7 +71,6 @@ public class Booking extends CommonEntity{
         if(userId!=0)
         {
             performance = new Performance();
-            //Performance performanceNew = new Performance();
             performance.setId(userId);
         }
         return performance;

@@ -24,8 +24,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-//не используется
-
 public class ScenaristService {
     private final DatabaseShows databaseShows;
     private final ScenaristApi scenaristApi = NetworkSmth.getInstance().scenaristApi();
@@ -35,16 +33,6 @@ public class ScenaristService {
     }
 
 
-  /*  public void takeDataFromApi(){
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                // All your networking logic
-                // should be here
-            }
-        });
-    }*/
-
     public void getAllScenaristsFromApi(){
         scenaristApi.getAllScenarists().enqueue(new Callback<List<ScenaristDto>>() {
 
@@ -53,25 +41,13 @@ public class ScenaristService {
                 ScenaristMapping mapper = Mappers.getMapper(ScenaristMapping.class);
                 List<Scenarist> scenarists = mapper.dtoesToEntities(response.body());
                 if(response.body().isEmpty()){
-                    Log.d("Padla pustaiaa","yeeep");
+                    Log.d("scenaristservice","success");
                 }
-                Log.d("apiPerform fuccc","yeeep");
-                //   addToDb(performances);
-
-                if(scenarists.size()!=0){
-                    for (Scenarist scenarist: scenarists) {
-
-                        Log.d(String.valueOf("sss"),"scenarist:"
-                                + scenarist.getName()+ " " +scenarist.getId());
-
-                    }
-                }
-
             }
 
             @Override
             public void onFailure(Call<List<ScenaristDto>> call, Throwable t) {
-                Log.d("apiPerform suckk","Something is going wrong"+t.getMessage() +t.getCause());
+                Log.d("scenaristservice","Something is going wrong "+t.getMessage() +t.getCause());
             }
         });
     }
